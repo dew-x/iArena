@@ -16,8 +16,8 @@ var ROBOT_STATS = [
 var MAXSTAT = 5;
 
 window.onload = function () {
-    G.robotA = new Robot();
-    G.robotB = new Robot();
+    G.robotA = new Robot("A");
+    G.robotB = new Robot("B");
     // render A
     G.robotA.doUI("robotA");
     // render B
