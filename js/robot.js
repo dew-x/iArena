@@ -52,4 +52,11 @@ function Robot(name) {
         elem.appendChild(points);
         parent.appendChild(elem);
     }
+    this.getStats = function () {
+        var ret={};
+        for (var stat in this.stats) {
+            ret[stat]=this.stats[stat];
+        }
+        return ret;
+    }
 }
