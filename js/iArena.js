@@ -15,8 +15,8 @@ var ROBOT_STATS = [
 ];
 
 var MAXSTAT = 5;
-var PLAYER_RADIUS = 0.05;
-var ARENA_SIZE = 20;
+var ARENA_SIZE = 25;
+var PLAYER_RADIUS = 1/ARENA_SIZE;
 
 window.onload = function () {
     G.robotA = new Robot("A");
