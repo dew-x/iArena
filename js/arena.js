@@ -32,11 +32,41 @@ function Arena() {
                 x:ARENA_SIZE*(PLAYER_RADIUS+Math.random()*(1-PLAYER_RADIUS*2)),
                 y:ARENA_SIZE*(PLAYER_RADIUS+Math.random()*(1-PLAYER_RADIUS*2)),
                 s:this.robots[i].getStats(),
+                t:{},
             });
         }
     }
     this.update = function (delta) {
-
+        for (var i=0; i<this.players.length; ++i) {
+            AI(this.players[i],this.makeView(i),delta);
+        }
+        for (var i=0; i<this.players.length; ++i) {
+            var m=magnitude(this.players[i].t.vx,this.players[i].t.vy);
+            if (m>1) {
+                this.players[i].t.vx/=m;
+                this.players[i].t.vy/=m;
+            }
+            this.players[i].x += this.players[i].t.vx*delta/1000*this.players[i].s.speed;
+            this.players[i].y += this.players[i].t.vy*delta/1000*this.players[i].s.speed;
+            this.players[i].x = clamp(this.players[i].x,ARENA_BORDER,ARENA_SIZE-ARENA_BORDER);
+            this.players[i].y = clamp(this.players[i].y,ARENA_BORDER,ARENA_SIZE-ARENA_BORDER);
+        }
+    }
+    this.makeView = function (pID) {
+        var ret=[];
+        for (var i=0; i<this.players.length; ++i) {
+            if (i!=pID) {
+                if (dist2(this.players[pID].x,this.players[pID].y,this.players[i].x,this.players[i].y)<=this.players[pID].s.sight*2+1) {
+                    ret.push({
+                        id:i,
+                        team:i,
+                        x:this.players[i].x-this.players[pID].x,
+                        y:this.players[i].y-this.players[pID].y
+                    });
+                }
+            }
+        }
+        return ret;
     }
     this.toScreen = function (v) {
         return v/ARENA_SIZE*this.size;

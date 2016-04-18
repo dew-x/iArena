@@ -16,6 +16,7 @@ var ROBOT_STATS = [
 
 var MAXSTAT = 5;
 var ARENA_SIZE = 25;
+var ARENA_BORDER = 1;
 var PLAYER_RADIUS = 1/ARENA_SIZE;
 
 window.onload = function () {
