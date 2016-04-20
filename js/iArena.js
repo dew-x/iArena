@@ -2,6 +2,7 @@ var G = {
     robotA: null,
     robotB: null,
     arena: null,
+    debug:false,
 }
 
 var ROBOT_STATS = [
@@ -35,4 +36,7 @@ window.onload = function () {
 
 document.onkeypress=function(e){
     if (e.which==114) G.arena.reset();
+    else if (e.which==115) console.log(G.arena.players);
+    else if (e.which==100) G.debug=true;
+    else console.log(e.which);
 };

@@ -71,7 +71,7 @@ function Arena() {
     this.toScreen = function (v) {
         return v/ARENA_SIZE*this.size;
     }
-    this.drawPlayer = function (s) {
+    this.drawPlayer = function (s,t) {
         // sight
         drawCircle(this.ctx,0,0,(s.sight*2+1)/ARENA_SIZE*this.size,"rgba(100,100,255,0.1)");
         // range
@@ -82,7 +82,7 @@ function Arena() {
         for (var i=0; i<s.armor; ++i) {
             drawCircle(this.ctx,0,0,PLAYER_RADIUS*this.size+2*(i+1),null,"gray",3,[5]);
         }
-
+        drawLine(this.ctx,0,0,t.vx*10,t.vy*10,"red",4);
     }
     this.draw = function () {
         this.ctx.clearRect(0,0,this.width,this.height);
@@ -94,7 +94,7 @@ function Arena() {
             this.ctx.fillStyle="orange";
             this.ctx.save();
             this.ctx.translate(this.toScreen(this.players[i].x),this.toScreen(this.players[i].y));
-            this.drawPlayer(this.players[i].s);
+            this.drawPlayer(this.players[i].s,this.players[i].t);
             this.ctx.restore();
         }
         this.ctx.restore();
@@ -104,5 +104,6 @@ function Arena() {
         this.update(delta);
         this.draw();
         window.requestAnimationFrame(this.step.bind(this));
+        //setTimeout(this.step.bind(this),2000);
     }
 }
