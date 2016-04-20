@@ -1,0 +1,11 @@
+-Level
+-No stats
+-One map
+-Player perma-death on disconnect/death
+-Realm of the mad god like
+-Constant weapon
+-Power ups dropped by monsters
+-Monsters controlled by AI
+-No drops
+-Open pvp
+-2D
