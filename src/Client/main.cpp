@@ -21,7 +21,7 @@ int main() {
 	cout << req.As.rLogin.nick << endl;
 	//con
 	const char *what = Protocol::encode(req);
-	for (unsigned i = 0; i < sizeof(Message); ++i) cout <<i<<" "<< what[i]<<endl;
+	for (unsigned i = 0; i < sizeof(Message); ++i) cout <<i<<" "<< (int)what[i]<<endl;
 	cout << endl;
 	Message req2 = Protocol::decode(what);
 	cout << req2.t << " " << req2.ts << endl;

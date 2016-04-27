@@ -9,3 +9,5 @@ deps/
 *.obj
 *.log
 *.idb
+*.iobj
+*.ipdb
