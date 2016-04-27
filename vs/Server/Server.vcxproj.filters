@@ -18,9 +18,15 @@
     <ClCompile Include="..\..\src\Server\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Server\Protocol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Server\const.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Server\Protocol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
