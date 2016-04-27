@@ -1,0 +1,1 @@
+Server.exe >Server.log
