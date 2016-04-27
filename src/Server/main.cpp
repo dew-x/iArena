@@ -3,7 +3,6 @@
 #include <SFML\Network.hpp>
 #include "const.h"
 #include <string>
-#include <Windows.h>
 using namespace std;
 
 int main() {

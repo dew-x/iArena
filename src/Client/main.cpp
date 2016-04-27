@@ -2,6 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include <SFML\Network.hpp>
 #include "const.h"
+#include <string>
 using namespace std;
 
 int main() {
