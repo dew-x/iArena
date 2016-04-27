@@ -3,6 +3,7 @@
 #include <SFML\Network.hpp>
 #include "const.h"
 #include <string>
+#include "Protocol.h"
 using namespace std;
 
 int main() {
@@ -13,7 +14,18 @@ int main() {
 	sf::UdpSocket socket;
 
 	// Send a message to the server
+
 	const char out[] = "Hi, I'm a client";
+	Message req = Protocol::rLogin("DEW");
+	cout << req.t << " " << req.ts << endl;
+	cout << req.As.rLogin.nick << endl;
+	//con
+	const char *what = Protocol::encode(req);
+	for (unsigned i = 0; i < sizeof(Message); ++i) cout <<i<<" "<< what[i]<<endl;
+	cout << endl;
+	Message req2 = Protocol::decode(what);
+	cout << req2.t << " " << req2.ts << endl;
+	cout << req2.As.rLogin.nick << endl;
 	if (socket.send(out, sizeof(out), server, port) != sf::Socket::Done) {
 		cout << "Can't connect to server" << endl;
 		return 1;
