@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\include\PROTO\Protocol.cpp" />
     <ClCompile Include="..\..\src\Server\main.cpp" />
-    <ClCompile Include="..\..\src\Server\Protocol.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\PROTO\Protocol.h" />
     <ClInclude Include="..\..\src\Server\const.h" />
-    <ClInclude Include="..\..\src\Server\Protocol.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E5301075-3509-46D5-9DA8-D2D821BCD790}</ProjectGuid>

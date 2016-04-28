@@ -18,7 +18,7 @@
     <ClCompile Include="..\..\src\Server\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Server\Protocol.cpp">
+    <ClCompile Include="..\..\include\PROTO\Protocol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -26,7 +26,7 @@
     <ClInclude Include="..\..\src\Server\const.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Server\Protocol.h">
+    <ClInclude Include="..\..\include\PROTO\Protocol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
