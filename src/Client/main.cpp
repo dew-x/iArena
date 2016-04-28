@@ -4,6 +4,7 @@
 #include "const.h"
 #include <string>
 #include <PROTO\Protocol.h>
+#include "Game.h"
 using namespace std;
 
 int main() {
@@ -36,5 +37,7 @@ int main() {
 	std::string buff = in;
 	cout << s << " " << buff << " " << received << " " << sender << " " << senderPort << endl;
 	cout << res.t << " " << res.ts << " " << res.As.Login.uid << " " << res.As.Login.x <<" "<< res.As.Login.y << endl;
+	Game g;
+	g.run();
 	return 0;
 }
