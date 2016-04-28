@@ -11,3 +11,4 @@ deps/
 *.idb
 *.iobj
 *.ipdb
+*.opendb
