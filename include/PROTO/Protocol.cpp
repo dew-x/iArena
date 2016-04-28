@@ -16,7 +16,18 @@ Message Protocol::rLogin(const char nick[4])
 	Message m;
 	m.t = Message::REQUEST_LOGIN;
 	m.ts = now();
-	strcpy_s(m.As.rLogin.nick,sizeof(nick), nick);
+	strcpy_s(m.As.rLogin.nick, sizeof(nick), nick);
+	return m;
+}
+
+Message Protocol::Login(unsigned uid, float x, float y)
+{
+	Message m;
+	m.t = Message::LOGIN;
+	m.ts = now();
+	m.As.Login.uid = uid;
+	m.As.Login.x = x;
+	m.As.Login.y = y;
 	return m;
 }
 

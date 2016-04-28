@@ -3,6 +3,7 @@
 #include <SFML\Network.hpp>
 #include "const.h"
 #include <string>
+#include <PROTO\Protocol.h>
 using namespace std;
 
 int main() {
@@ -27,8 +28,9 @@ int main() {
 		if (received != 0) {
 			string buff = in;
 			cout << s << " " << buff << " " << received << " " << sender << " " << senderPort << endl;
-			const char out[] = "Hi, I'm the server";
-			if (socket.send(out, sizeof(out), sender, senderPort) != sf::Socket::Done)
+			Message res = Protocol::Login(1, 0, 0);
+			const char *response = Protocol::encode(res);
+			if (socket.send(response, sizeof(Message), sender, senderPort) != sf::Socket::Done)
 				return 1;
 		}
 	}

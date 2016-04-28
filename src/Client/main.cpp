@@ -3,7 +3,7 @@
 #include <SFML\Network.hpp>
 #include "const.h"
 #include <string>
-#include "Protocol.h"
+#include <PROTO\Protocol.h>
 using namespace std;
 
 int main() {
@@ -14,19 +14,9 @@ int main() {
 	sf::UdpSocket socket;
 
 	// Send a message to the server
-
-	const char out[] = "Hi, I'm a client";
 	Message req = Protocol::rLogin("DEW");
-	cout << req.t << " " << req.ts << endl;
-	cout << req.As.rLogin.nick << endl;
-	//con
 	const char *what = Protocol::encode(req);
-	for (unsigned i = 0; i < sizeof(Message); ++i) cout <<i<<" "<< (int)what[i]<<endl;
-	cout << endl;
-	Message req2 = Protocol::decode(what);
-	cout << req2.t << " " << req2.ts << endl;
-	cout << req2.As.rLogin.nick << endl;
-	if (socket.send(out, sizeof(out), server, port) != sf::Socket::Done) {
+	if (socket.send(what, sizeof(Message), server, port) != sf::Socket::Done) {
 		cout << "Can't connect to server" << endl;
 		return 1;
 	}
@@ -42,7 +32,9 @@ int main() {
 		cout << "Socket recieve failed" << endl;
 		return 1;
 	}
-	string buff = in;
+	Message res = Protocol::decode(in);
+	std::string buff = in;
 	cout << s << " " << buff << " " << received << " " << sender << " " << senderPort << endl;
+	cout << res.t << " " << res.ts << " " << res.As.Login.uid << " " << res.As.Login.x <<" "<< res.As.Login.y << endl;
 	return 0;
 }

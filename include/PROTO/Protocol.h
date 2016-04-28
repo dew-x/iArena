@@ -11,7 +11,7 @@ struct Message {
 	};
 	Message::Type t;
 	int ts;
-	union 
+	union
 	{
 		struct {
 			char nick[4];
@@ -26,12 +26,13 @@ struct Message {
 
 class Protocol
 {
-private: 
+private:
 	static sf::Clock _clock;
 	static int now();
 public:
 	static const Message decode(const char *msg);
 	static const char* encode(const Message &m);
 	static Message rLogin(const char nick[4]);
+	static Message Login(unsigned uid, float x, float y);
 };
 
