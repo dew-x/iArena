@@ -20,13 +20,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\include\PROTO\Protocol.cpp" />
+    <ClCompile Include="..\..\src\Client\Comm.cpp" />
     <ClCompile Include="..\..\src\Client\Game.cpp" />
     <ClCompile Include="..\..\src\Client\main.cpp" />
+    <ClCompile Include="..\..\src\Client\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\PROTO\Protocol.h" />
+    <ClInclude Include="..\..\src\Client\Comm.h" />
     <ClInclude Include="..\..\src\Client\const.h" />
     <ClInclude Include="..\..\src\Client\Game.h" />
+    <ClInclude Include="..\..\src\Client\Player.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A70F2C5B-0859-4472-B465-81DC64D640BF}</ProjectGuid>

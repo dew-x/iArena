@@ -2,7 +2,18 @@
 #include <iostream>
 #include <SFML\Graphics.hpp>
 #include <vector>
+#include "const.h"
+#include <thread>
+#include "Comm.h"
+#include "Player.h"
 using namespace std;
+
+enum scenes {
+	SCENE_LOGIN,
+	SCENE_LOADING,
+	SCENE_GAME,
+	SCENE_SCORE
+};
 
 class Game
 {
@@ -11,7 +22,20 @@ public:
 	~Game();
 	void run();
 private:
-	sf::Window *app;
+	sf::RenderWindow app;
+	sf::Font font;
+	sf::Text typeYourNick;
 	int width, height;
+	int uid;
+	scenes scene;
+	char nick[NICKSIZE];
+	int nickpos;
+	void commitNick();
+	void drawLogin();
+	void drawLoading();
+	void doGame();
+	Comm *C;
+	thread T;
+	Player *P;
 };
 

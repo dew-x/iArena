@@ -11,7 +11,7 @@ const char* Protocol::encode(const Message &m)
 	return reinterpret_cast<const char*>(&m);
 }
 
-Message Protocol::rLogin(const char nick[4])
+Message Protocol::rLogin(const char nick[12])
 {
 	Message m;
 	m.t = Message::REQUEST_LOGIN;
