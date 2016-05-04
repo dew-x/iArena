@@ -21,6 +21,7 @@ Player::~Player()
 void Player::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	sf::View view = target.getView();
+	
 	target.draw(circle);
 }
 
