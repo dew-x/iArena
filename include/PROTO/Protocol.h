@@ -14,7 +14,7 @@ struct Message {
 	union
 	{
 		struct {
-			char nick[16];
+			char nick[12];
 		} rLogin;
 		struct {
 			unsigned uid;
@@ -32,7 +32,7 @@ private:
 public:
 	static const Message decode(const char *msg);
 	static const char* encode(const Message &m);
-	static Message rLogin(const char nick[16]);
+	static Message rLogin(const char nick[12]);
 	static Message Login(unsigned uid, float x, float y);
 };
 

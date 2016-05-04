@@ -27,18 +27,20 @@ void Comm::init()
 			if (s != sf::Socket::Done) {
 				end = true;
 			}
-			int pos = queue.size()-1;
-			Message m = Protocol::decode(in);
-			// check if message is valid
-			if (m.t<Message::MAX) {
-				std::string buff = in;
-				cout << s << " " << buff << " " << received << " " << sender << " " << senderPort << endl;
-				cout << m.t << " " << m.ts << " " << m.As.Login.uid << " " << m.As.Login.x << " " << m.As.Login.y << endl;
-				queue.push_back(m);
-				// sort to proper order
-				while (pos >= 0 && queue[pos].ts > queue[pos + 1].ts) {
-					swap(queue[pos + 1], queue[pos]);
-					--pos;
+			else {
+				int pos = queue.size() - 1;
+				Message m = Protocol::decode(in);
+				// check if message is valid
+				if (m.t<Message::MAX) {
+					std::string buff = in;
+					cout << s << " " << buff << " " << received << " " << sender << " " << senderPort << endl;
+					cout << m.t << " " << m.ts << " " << m.As.Login.uid << " " << m.As.Login.x << " " << m.As.Login.y << endl;
+					queue.push_back(m);
+					// sort to proper order
+					while (pos >= 0 && queue[pos].ts > queue[pos + 1].ts) {
+						swap(queue[pos + 1], queue[pos]);
+						--pos;
+					}
 				}
 			}
 		}

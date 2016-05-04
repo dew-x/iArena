@@ -104,7 +104,7 @@ void Game::drawLogin()
 
 void Game::drawLoading()
 {
-	if (P == NULL) {
+	if (P != NULL) {
 		scene = SCENE_GAME;
 	}
 	else {
