@@ -8,8 +8,12 @@ public:
 	Player(unsigned uid, float x, float y, float size);
 	~Player();
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	void setDirection(sf::Vector2f dir);
+	void updatePos(float dt);
 private:
+
 	sf::CircleShape circle;
 	sf::Vector2f direction;
+	sf::Vector2f position;
 };
 

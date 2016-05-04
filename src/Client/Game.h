@@ -33,12 +33,13 @@ private:
 	void commitNick();
 	void drawLogin();
 	void drawLoading();
-	void doGame();
-	void updateGame();
+	void doGame(sf::Time dt);
+	void updateGame(sf::Time dt);
 	void drawGame();
 	void updateMovement();
 	Comm *C;
 	thread T;
 	Player *P;
+	sf::Clock deltaClock;
 };
 

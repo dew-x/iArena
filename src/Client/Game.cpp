@@ -20,6 +20,7 @@ Game::Game()
 	uid = -1;
 	C = NULL;
 	P = NULL;
+	deltaClock = sf::Clock();
 }
 
 
@@ -38,7 +39,7 @@ void Game::run()
 	//app->setFramerateLimit(60);
 	while (app.isOpen())
 	{
-		cout << scene << endl;
+		sf::Time dt = deltaClock.restart();
 		sf::Event event;
 		while (app.pollEvent(event))
 		{
@@ -88,7 +89,7 @@ void Game::run()
 			drawLoading();
 		}
 		else if (scene == SCENE_GAME) {
-			doGame();
+			doGame(dt);
 		}
 		app.display();
 	}
@@ -135,15 +136,14 @@ void Game::drawLoading()
 	}
 }
 
-void Game::doGame()
+void Game::doGame(sf::Time dt)
 {
-	updateGame();
-	drawGame();
-	
+	updateGame(dt);
+	drawGame();	
 }
 
-void Game::updateGame() {
-
+void Game::updateGame(sf::Time dt) {
+	P->updatePos(dt.asMilliseconds());
 }
 
 void Game::drawGame() {
@@ -152,18 +152,17 @@ void Game::drawGame() {
 	sf::RectangleShape rec({ (float)width,(float)height });
 	rec.setFillColor(sf::Color::Blue);
 	app.draw(rec);
-	//draw shape
-	sf::View view(sf::FloatRect(0, 0, (float)width, (float)height));
-	view.setCenter(width / 2.0f, height / 2.0f);
-	view.move({ -width / 2.0f, -height / 2.0f });
-	app.setView(view);
 
+	//draw shape
+	sf::View view(sf::FloatRect(0, 0, width, height));
+	app.setView(view);
+	view.setCenter(width / 2, height / 2);
 	app.draw(*P);
 
 	// draw enemies
 
 	//draw other players
-	app.setView(app.getDefaultView());
+
 }
 
 void Game::updateMovement(){
@@ -174,4 +173,19 @@ void Game::updateMovement(){
 		sf::Keyboard::isKeyPressed(sf::Keyboard::D)
 	);
 	C->send(m);
+	sf::Vector2f dir = { 0.0f,0.0f };
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		dir.y -= 1.0f;
+	} 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		dir.x -= 1.0f;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		dir.y += 1.0f;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		dir.x += 1.0f;
+	}
+	P->setDirection(dir);
+
 }
