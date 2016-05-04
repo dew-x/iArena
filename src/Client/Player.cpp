@@ -17,6 +17,5 @@ Player::~Player()
 void Player::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	sf::View view = target.getView();
-	//circle.setPosition({view.getSize().x/2.0f,view.getSize().y / 2.0f });
 	target.draw(circle);
 }

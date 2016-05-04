@@ -152,17 +152,18 @@ void Game::drawGame() {
 	sf::RectangleShape rec({ (float)width,(float)height });
 	rec.setFillColor(sf::Color::Blue);
 	app.draw(rec);
-
 	//draw shape
-	sf::View view(sf::FloatRect(0, 0, width, height));
+	sf::View view(sf::FloatRect(0, 0, (float)width, (float)height));
+	view.setCenter(width / 2.0f, height / 2.0f);
+	view.move({ -width / 2.0f, -height / 2.0f });
 	app.setView(view);
-	view.setCenter(width / 2, height / 2);
+
 	app.draw(*P);
 
 	// draw enemies
 
 	//draw other players
-
+	app.setView(app.getDefaultView());
 }
 
 void Game::updateMovement(){
