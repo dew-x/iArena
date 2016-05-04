@@ -38,6 +38,7 @@ void Game::run()
 	//app->setFramerateLimit(60);
 	while (app.isOpen())
 	{
+		cout << scene << endl;
 		sf::Event event;
 		while (app.pollEvent(event))
 		{
@@ -48,6 +49,12 @@ void Game::run()
 			else if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Escape || event.key.alt && event.key.code == sf::Keyboard::F4) {
 					app.close();
+				}
+				else if (scene == SCENE_GAME) {
+					if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::D) {
+						updateMovement();
+					}
+
 				}
 			}
 			else if (event.type == sf::Event::KeyReleased) {
@@ -64,6 +71,11 @@ void Game::run()
 						if (nickpos >= MINNICK) {
 							commitNick();
 						}
+					}
+				}
+				else if (scene == SCENE_GAME) {
+					if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::D) {
+						updateMovement();
 					}
 				}
 			}
@@ -116,7 +128,7 @@ void Game::drawLoading()
 		while (!C->empty()) {
 			Message m = C->poll();
 			if (m.t == Message::LOGIN) {
-				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y);
+				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y, width*0.01f);
 				break;
 			}
 		}
@@ -125,7 +137,40 @@ void Game::drawLoading()
 
 void Game::doGame()
 {
+	updateGame();
+	drawGame();
+	
+}
+
+void Game::updateGame() {
+
+}
+
+void Game::drawGame() {
+
+	//draw screen
 	sf::RectangleShape rec({ (float)width,(float)height });
 	rec.setFillColor(sf::Color::Blue);
 	app.draw(rec);
+
+	//draw shape
+	sf::View view(sf::FloatRect(0, 0, width, height));
+	app.setView(view);
+	view.setCenter(width / 2, height / 2);
+	app.draw(*P);
+
+	// draw enemies
+
+	//draw other players
+
+}
+
+void Game::updateMovement(){
+	Message m = Protocol::uKeys(
+		sf::Keyboard::isKeyPressed(sf::Keyboard::W), 
+		sf::Keyboard::isKeyPressed(sf::Keyboard::A), 
+		sf::Keyboard::isKeyPressed(sf::Keyboard::S), 
+		sf::Keyboard::isKeyPressed(sf::Keyboard::D)
+	);
+	C->send(m);
 }

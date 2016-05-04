@@ -34,6 +34,9 @@ private:
 	void drawLogin();
 	void drawLoading();
 	void doGame();
+	void updateGame();
+	void drawGame();
+	void updateMovement();
 	Comm *C;
 	thread T;
 	Player *P;
