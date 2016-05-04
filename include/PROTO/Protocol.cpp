@@ -31,9 +31,34 @@ Message Protocol::Login(unsigned uid, float x, float y)
 	return m;
 }
 
+Message Protocol::uKeys(bool w, bool a, bool s, bool d)
+{
+	Message m;
+	m.t = Message::UPDATE_KEYS;
+	m.ts = now();
+	m.As.uKeys.w = w;
+	m.As.uKeys.a = a;
+	m.As.uKeys.s = s;
+	m.As.uKeys.d = d;
+	return m;
+}
+
+Message Protocol::nKeys()
+{
+	return make(Message::NOTIFY_KEYS);
+}
+
 int Protocol::now()
 {
 	return _clock.getElapsedTime().asMilliseconds();
+}
+
+Message Protocol::make(Message::Type type)
+{
+	Message m;
+	m.t = type;
+	m.ts = now();
+	return m;
 }
 
 sf::Clock Protocol::_clock = sf::Clock();
