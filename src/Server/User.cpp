@@ -1,30 +1,27 @@
 #include "User.h"
 
-
-
-User::User(sf::IpAddress ip, unsigned short port, int ts, const char nick[12])
+Message User::message(const Message & m)
 {
-	this->ip = ip;
-	this->port = port;
-	this->ts = ts;
-	this->nick = nick;
+	Message res;
+	res.t = Message::NONE;
+	switch (m.t)
+	{
+	case Message::NONE:
+		break;
+	case Message::REQUEST_LOGIN:
+		res = Protocol::Login(uid, x, y);
+		break;
+	case Message::LOGIN:
+		break;
+	case Message::UPDATE_KEYS:
+		res = Protocol::nKeys();
+		break;
+	case Message::NOTIFY_KEYS:
+		break;
+	case Message::MAX:
+		break;
+	default:
+		break;
+	}
+	return res;
 }
-
-
-User::~User()
-{
-}
-
-void User::message(sf::UdpSocket *socket, const Message & m)
-{
-}
-
-User::User(const User & other)
-{
-	ip = other.ip;
-	port = other.port;
-	ts = other.ts;
-	nick = other.nick;
-}
-
-
