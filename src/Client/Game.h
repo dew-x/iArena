@@ -41,5 +41,7 @@ private:
 	thread T;
 	Player *P;
 	sf::Clock deltaClock;
+	sf::Texture b;
+	sf::Sprite background;
 };
 

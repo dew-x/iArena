@@ -21,6 +21,14 @@ Game::Game()
 	C = NULL;
 	P = NULL;
 	deltaClock = sf::Clock();
+
+	if (!b.loadFromFile("grass.jpg"))
+	{
+		// error...
+	}
+	background.setTexture(b);
+	background.setPosition(0, 0);
+	
 }
 
 
@@ -147,11 +155,12 @@ void Game::updateGame(sf::Time dt) {
 }
 
 void Game::drawGame() {
-
+	//app.clear();
 	//draw screen
-	sf::RectangleShape rec({ (float)width,(float)height });
+	/*sf::RectangleShape rec({ (float)width,(float)height });
 	rec.setFillColor(sf::Color::Blue);
-	app.draw(rec);
+	app.draw(rec);*/
+	app.draw(background);
 
 	//draw shape
 	sf::View view(sf::FloatRect(0, 0, (float)width, (float)height));
