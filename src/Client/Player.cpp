@@ -32,7 +32,7 @@ void Player::setDirection(sf::Vector2f dir){
 }
 
 void Player::updatePos(float dt){
-	position += (direction*dt);
+	position += (direction*dt)*SPEED;
 	ps.setPosition(position);
 }
 
@@ -53,5 +53,10 @@ void Player::updateDirection(){
 
 void Player::setRotation(float angle){
 	ps.setRotation(angle);
+}
+
+sf::Vector2f Player::getPosition()
+{
+	return position;
 }
 

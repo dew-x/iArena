@@ -8,7 +8,7 @@ Map::Map()
 	for (unsigned i = 0; i < MWIDTH; ++i) {
 		for (unsigned j = 0; j < MHEIGHT; ++j) {
 			unsigned pos = (j*MWIDTH+i) * 4;
-			for (unsigned k = 0; k < 4; ++k)  grid[pos+k].color = sf::Color::Green;
+			for (unsigned k = 0; k < 4; ++k)  grid[pos+k].color = ((i + j) % 2)?sf::Color::Black:sf::Color(90,90,90);
 			float x = (float)i*MSIZE;
 			float y = (float)j*MSIZE;
 			grid[pos].position = { x,y };

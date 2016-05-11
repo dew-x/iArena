@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include "const.h"
 
 class Player : public sf::Drawable
 {
@@ -13,6 +14,7 @@ public:
 	void loadSprite(float size);
 	void updateDirection();
 	void setRotation(float angle);
+	sf::Vector2f getPosition();
 	
 private:
 

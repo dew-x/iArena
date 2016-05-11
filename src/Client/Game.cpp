@@ -79,7 +79,7 @@ void Game::run()
 			else if (event.type == sf::Event::MouseButtonPressed){
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
-					Protocol::fireWeapon(sf::Mouse::getPosition().x-(width/2), sf::Mouse::getPosition().y - (height/2));
+					Protocol::fireWeapon(sf::Mouse::getPosition().x-(width/2.0f), sf::Mouse::getPosition().y - (height/2.0f));
 				}
 			}
 			
@@ -183,10 +183,10 @@ void Game::doGame(sf::Time dt)
 }
 
 void Game::updateGame(sf::Time dt) {
-	P->updatePos(dt.asMilliseconds());
+	P->updatePos((float)dt.asMilliseconds());
 	float radians = atan2(sf::Mouse::getPosition().y - height / 2.0f, sf::Mouse::getPosition().x - width / 2.0f);
 	P->setRotation(RadToDeg(radians));
-	scope.setPosition(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
+	scope.setPosition((float)sf::Mouse::getPosition().x,(float) sf::Mouse::getPosition().y);
 }
 
 void Game::drawGame() {
@@ -195,12 +195,13 @@ void Game::drawGame() {
 	/*sf::RectangleShape rec({ (float)width,(float)height });
 	rec.setFillColor(sf::Color::Blue);
 	app.draw(rec);*/
-	app.draw(background);
+	//app.draw(background);
 
 	//draw shape
 	sf::View view(sf::FloatRect(0, 0, (float)width, (float)height));
+	sf::Vector2f Ppos = P->getPosition();
 	view.setCenter(width / 2.0f, height / 2.0f);
-	view.move({ -width / 2.0f, -height / 2.0f });
+	view.move({ -width / 2.0f + Ppos.x, -height / 2.0f + Ppos.y });
 	app.setView(view);
 	app.draw(*M);
 	app.draw(*P);
