@@ -45,6 +45,7 @@ private:
 
 	Map *M;
 
+	vector<Message> orders;
 	//sprites
 	sf::Texture b;
 	sf::Texture s;
