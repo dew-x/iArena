@@ -21,6 +21,7 @@ Game::Game()
 	C = NULL;
 	P = NULL;
 	M = NULL;
+	orders = vector<Message>(0);
 	deltaClock = sf::Clock();
 
 
@@ -187,6 +188,49 @@ void Game::updateGame(sf::Time dt) {
 	float radians = atan2(sf::Mouse::getPosition().y - height / 2.0f, sf::Mouse::getPosition().x - width / 2.0f);
 	P->setRotation(RadToDeg(radians));
 	scope.setPosition((float)sf::Mouse::getPosition().x,(float) sf::Mouse::getPosition().y);
+	while (!C->empty()) {
+		Message m = C->poll();
+		
+		switch (m.t)
+		{
+		case Message::NONE:
+			break;
+		case Message::REQUEST_LOGIN:
+			break;
+		case Message::LOGIN:
+			break;
+		case Message::UPDATE_KEYS:
+			break;
+		case Message::NOTIFY_KEYS:
+			for (unsigned i = 0; i < orders.size(); i++) {
+				if (orders[i].uid == m.As.nKeys.rid) {
+					sf::Vector2f dir = { 0.0f,0.0f };
+					if (orders[i].As.uKeys.w) {
+						dir.y -= 1.0f;
+					}
+					if (orders[i].As.uKeys.a) {
+						dir.x -= 1.0f;
+					}
+					if (orders[i].As.uKeys.s) {
+						dir.y += 1.0f;
+					}
+					if (orders[i].As.uKeys.d) {
+						dir.x += 1.0f;
+					}
+					P->setDirection(dir);
+				}
+			}
+			break;
+		case Message::FIRE_WEAPON:
+			break;
+		case Message::FIRE_RESULT:
+			break;
+		case Message::MAX:
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void Game::drawGame() {
@@ -222,7 +266,8 @@ void Game::updateMovement(){
 		sf::Keyboard::isKeyPressed(sf::Keyboard::D)
 	);
 	C->send(m);
-	sf::Vector2f dir = { 0.0f,0.0f };
+	orders.push_back(m);
+	/*sf::Vector2f dir = { 0.0f,0.0f };
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		dir.y -= 1.0f;
 	} 
@@ -235,6 +280,6 @@ void Game::updateMovement(){
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		dir.x += 1.0f;
 	}
-	P->setDirection(dir);
+	P->setAcceleration(dir);*/
 
 }
