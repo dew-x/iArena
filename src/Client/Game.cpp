@@ -33,8 +33,7 @@ Game::Game()
 
 
 	//create scope
-	sf::Texture s;
-	if (!s.loadFromFile("textures/scope.gif"))
+	if (!s.loadFromFile("textures/scope.png"))
 	{
 		// error...
 	}
@@ -72,6 +71,17 @@ void Game::run()
 			if (event.type == sf::Event::Closed) {
 				app.close();
 			}
+
+			else if (event.type == sf::Event::MouseButtonPressed){
+				if (event.mouseButton.button == sf::Mouse::Left)
+				{
+					std::cout << "the right button was pressed" << std::endl;
+					std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+					std::cout << "mouse y: " << event.mouseButton.y << std::endl;
+
+				}
+			}
+
 			else if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Escape || event.key.alt && event.key.code == sf::Keyboard::F4) {
 					app.close();
@@ -169,7 +179,8 @@ void Game::doGame(sf::Time dt)
 
 void Game::updateGame(sf::Time dt) {
 	P->updatePos(dt.asMilliseconds());
-	//sf::Vector2i mousePos = sf::Mouse
+	float radians = atan2(sf::Mouse::getPosition().y - height / 2.0f, sf::Mouse::getPosition().x - width / 2.0f);
+	P->setRotation(RadToDeg(radians));
 	scope.setPosition(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
 }
 

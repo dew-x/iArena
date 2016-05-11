@@ -52,3 +52,7 @@ void Player::updateViewDirection(sf::Vector2f mousePosition){
 	direction = dir / length;
 }
 
+void Player::setRotation(float angle){
+	ps.setRotation(angle);
+}
+
