@@ -23,6 +23,7 @@
     <ClCompile Include="..\..\src\Client\Comm.cpp" />
     <ClCompile Include="..\..\src\Client\Game.cpp" />
     <ClCompile Include="..\..\src\Client\main.cpp" />
+    <ClCompile Include="..\..\src\Client\Map.cpp" />
     <ClCompile Include="..\..\src\Client\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -30,6 +31,7 @@
     <ClInclude Include="..\..\src\Client\Comm.h" />
     <ClInclude Include="..\..\src\Client\const.h" />
     <ClInclude Include="..\..\src\Client\Game.h" />
+    <ClInclude Include="..\..\src\Client\Map.h" />
     <ClInclude Include="..\..\src\Client\Player.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
