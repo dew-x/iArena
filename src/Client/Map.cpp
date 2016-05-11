@@ -7,7 +7,7 @@ Map::Map()
 	grid = sf::VertexArray(sf::Quads, MWIDTH*MHEIGHT * 4);
 	for (unsigned i = 0; i < MWIDTH; ++i) {
 		for (unsigned j = 0; j < MHEIGHT; ++j) {
-			unsigned pos = i*j * 4;
+			unsigned pos = (j*MWIDTH+i) * 4;
 			for (unsigned k = 0; k < 4; ++k)  grid[pos+k].color = sf::Color::Green;
 			float x = (float)i*MSIZE;
 			float y = (float)j*MSIZE;

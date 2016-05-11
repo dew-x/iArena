@@ -7,7 +7,7 @@ Player::Player(unsigned uid, float x, float y , float size)
 	circle = sf::CircleShape(size);
 	circle.setOrigin({ circle.getLocalBounds().width / 2.0f,circle.getLocalBounds().height / 2.0f });
 	circle.setFillColor(sf::Color::Green);
-	direction.x = 1.0f;
+	direction.x = 0.0f;
 	direction.y = 0.0f;
 	position.x = x;
 	position.y = y;
@@ -33,6 +33,7 @@ void Player::setDirection(sf::Vector2f dir){
 
 void Player::updatePos(float dt){
 	position += (direction*dt);
+	ps.setPosition(position);
 }
 
 void Player::loadSprite(float size){
@@ -46,10 +47,8 @@ void Player::loadSprite(float size){
 	ps.setPosition(position);
 }
 
-void Player::updateViewDirection(sf::Vector2f mousePosition){
-	sf::Vector2f dir = mousePosition - position;
-	float length = sqrt((dir.x*dir.x)+(dir.y*dir.y));
-	direction = dir / length;
+void Player::updateDirection(){
+	
 }
 
 void Player::setRotation(float angle){

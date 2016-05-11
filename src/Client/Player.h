@@ -11,7 +11,7 @@ public:
 	void setDirection(sf::Vector2f dir);
 	void updatePos(float dt);
 	void loadSprite(float size);
-	void updateViewDirection(sf::Vector2f mousePosition);
+	void updateDirection();
 	void setRotation(float angle);
 	
 private:

@@ -6,6 +6,7 @@
 #include <thread>
 #include "Comm.h"
 #include "Player.h"
+#include "Map.h"
 using namespace std;
 
 enum scenes {
@@ -41,6 +42,8 @@ private:
 	thread T;
 	Player *P;
 	sf::Clock deltaClock;
+
+	Map *M;
 
 	//sprites
 	sf::Texture b;

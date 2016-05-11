@@ -20,6 +20,7 @@ Game::Game()
 	uid = -1;
 	C = NULL;
 	P = NULL;
+	M = NULL;
 	deltaClock = sf::Clock();
 
 
@@ -54,6 +55,8 @@ Game::~Game()
 		C->stop();
 		T.join();
 		delete C;
+		delete M;
+		delete P;
 	}
 }
 
@@ -72,16 +75,15 @@ void Game::run()
 				app.close();
 			}
 
+			//mouse event
 			else if (event.type == sf::Event::MouseButtonPressed){
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
-					std::cout << "the right button was pressed" << std::endl;
-					std::cout << "mouse x: " << event.mouseButton.x << std::endl;
-					std::cout << "mouse y: " << event.mouseButton.y << std::endl;
-
+					Protocol::fireWeapon(sf::Mouse::getPosition().x-(width/2), sf::Mouse::getPosition().y - (height/2));
 				}
 			}
-
+			
+			//key pressed events
 			else if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Escape || event.key.alt && event.key.code == sf::Keyboard::F4) {
 					app.close();
@@ -93,6 +95,8 @@ void Game::run()
 
 				}
 			}
+
+			//key released events
 			else if (event.type == sf::Event::KeyReleased) {
 				if (scene == SCENE_LOGIN) {
 					if (event.key.code >= sf::Keyboard::A && event.key.code <= sf::Keyboard::Z && nickpos<NICKSIZE-1) {
@@ -165,6 +169,7 @@ void Game::drawLoading()
 			Message m = C->poll();
 			if (m.t == Message::LOGIN) {
 				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y, width*0.05f);
+				M = new Map();
 				break;
 			}
 		}
@@ -197,6 +202,7 @@ void Game::drawGame() {
 	view.setCenter(width / 2.0f, height / 2.0f);
 	view.move({ -width / 2.0f, -height / 2.0f });
 	app.setView(view);
+	app.draw(*M);
 	app.draw(*P);
 
 	// draw enemies
