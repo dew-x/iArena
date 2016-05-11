@@ -37,9 +37,11 @@ Message Protocol::uKeys(bool w, bool a, bool s, bool d)
 	return m;
 }
 
-Message Protocol::nKeys()
+Message Protocol::nKeys(unsigned rid)
 {
-	return make(Message::NOTIFY_KEYS);
+	Message m = make(Message::NOTIFY_KEYS);
+	m.As.nKeys.rid = rid;
+	return m;
 }
 
 Message Protocol::fireWeapon(float x, float y)

@@ -15,7 +15,7 @@ Message User::message(const Message & m)
 		break;
 	case Message::UPDATE_KEYS:
 		keys.push_back(m);
-		res = Protocol::nKeys();
+		res = Protocol::nKeys(m.uid);
 		break;
 	case Message::NOTIFY_KEYS:
 		break;

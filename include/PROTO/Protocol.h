@@ -30,7 +30,7 @@ struct Message {
 			unsigned w, a, s, d;
 		} uKeys;
 		struct {
-			
+			unsigned rid;
 		} nKeys;
 		struct {
 			float x, y;
@@ -54,7 +54,7 @@ public:
 	static Message rLogin(const char nick[12]);
 	static Message Login(unsigned uid, float x, float y);
 	static Message uKeys(bool w, bool a, bool s, bool d);
-	static Message nKeys();
+	static Message nKeys(unsigned rid);
 	static Message fireWeapon(float x, float y);
 	static Message fireResult();
 };
