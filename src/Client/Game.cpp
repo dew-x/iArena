@@ -22,12 +22,17 @@ Game::Game()
 	P = NULL;
 	deltaClock = sf::Clock();
 
+
+	//load images
 	if (!b.loadFromFile("grass.jpg"))
 	{
 		// error...
 	}
+
+	
 	background.setTexture(b);
 	background.setPosition(0, 0);
+	
 	
 }
 

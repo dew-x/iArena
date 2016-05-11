@@ -11,6 +11,7 @@ Player::Player(unsigned uid, float x, float y , float size)
 	direction.y = 0.0f;
 	position.x = x;
 	position.y = y;
+	loadSprite();
 }
 
 
@@ -22,7 +23,7 @@ void Player::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	sf::View view = target.getView();
 	
-	target.draw(circle);
+	target.draw(ps);
 }
 
 void Player::setDirection(sf::Vector2f dir){
@@ -32,4 +33,13 @@ void Player::setDirection(sf::Vector2f dir){
 
 void Player::updatePos(float dt){
 	position += (direction*dt);
+}
+
+void Player::loadSprite(){
+	if (!t.loadFromFile("player.gif")) {
+		//error
+	}
+
+	ps.setTexture(t);
+	ps.setPosition(position);
 }
