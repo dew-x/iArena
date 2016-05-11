@@ -9,6 +9,8 @@ struct Message {
 		LOGIN,
 		UPDATE_KEYS,
 		NOTIFY_KEYS,
+		FIRE_WEAPON,
+		FIRE_RESULT,
 		MAX
 	};
 	Message::Type t;
@@ -29,6 +31,12 @@ struct Message {
 		struct {
 			
 		} nKeys;
+		struct {
+			float x, y;
+		} wFire;
+		struct {
+
+		} rFire;
 	} As;
 };
 
@@ -45,5 +53,7 @@ public:
 	static Message Login(unsigned uid, float x, float y);
 	static Message uKeys(bool w, bool a, bool s, bool d);
 	static Message nKeys();
+	static Message fireWeapon(float x, float y);
+	static Message fireResult();
 };
 

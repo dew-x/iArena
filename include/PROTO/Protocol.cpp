@@ -48,6 +48,19 @@ Message Protocol::nKeys()
 	return make(Message::NOTIFY_KEYS);
 }
 
+Message Protocol::fireWeapon(float x, float y)
+{
+	Message m= make(Message::FIRE_WEAPON);
+	m.As.wFire.x = x;
+	m.As.wFire.y = y;
+	return m;
+}
+
+Message Protocol::fireResult()
+{
+	return make(Message::FIRE_RESULT);
+}
+
 int Protocol::now()
 {
 	return _clock.getElapsedTime().asMilliseconds();
