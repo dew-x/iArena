@@ -11,6 +11,8 @@ public:
 	void setDirection(sf::Vector2f dir);
 	void updatePos(float dt);
 	void loadSprite();
+	void updateDirection(sf::Vector2f mousePosition);
+	
 private:
 
 	sf::CircleShape circle;
