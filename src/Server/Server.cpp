@@ -33,7 +33,7 @@ void Server::run()
 			if (got.t < Message::MAX) {
 				string UUID = (string)sender.toString() + to_string(senderPort);
 				if (got.t == Message::REQUEST_LOGIN) {
-					users[UUID] = { sender,senderPort,got.ts,got.As.rLogin.nick,cuid,0.0f,0.0f };
+					users[UUID] = { sender,senderPort,got.ts,got.As.rLogin.nick,cuid,1000.0f,1000.0f };
 					++cuid;
 				}
 				if (users.count(UUID)>0) {
