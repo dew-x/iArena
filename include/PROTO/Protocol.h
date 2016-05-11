@@ -46,9 +46,9 @@ class Protocol
 private:
 	static sf::Clock _clock;
 	static unsigned id;
-	static int now();
 	static Message make(Message::Type type);
 public:
+	static int now();
 	static const Message decode(const char *msg);
 	static const char* encode(const Message &m);
 	static Message rLogin(const char nick[12]);

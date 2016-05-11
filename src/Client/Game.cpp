@@ -204,6 +204,8 @@ void Game::updateGame(sf::Time dt) {
 		case Message::NOTIFY_KEYS:
 			for (unsigned i = 0; i < orders.size(); i++) {
 				if (orders[i].uid == m.As.nKeys.rid) {
+					int delta = Protocol::now()-orders[i].ts;
+					cout << delta << endl;
 					sf::Vector2f dir = { 0.0f,0.0f };
 					if (orders[i].As.uKeys.w) {
 						dir.y -= 1.0f;
