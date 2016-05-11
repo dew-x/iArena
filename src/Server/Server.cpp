@@ -26,6 +26,8 @@ void Server::run()
 	std::size_t received;
 	sf::IpAddress sender;
 	unsigned short senderPort;
+	sf::Clock clock;
+	int previous = clock.getElapsedTime().asMilliseconds();
 	while (true) {
 		sf::Socket::Status s = socket.receive(in, sizeof(in), received, sender, senderPort);
 		if (received != 0) {
@@ -42,6 +44,16 @@ void Server::run()
 					if (res.t != Message::NONE) socket.send(Protocol::encode(res), sizeof(Message) , u.ip, u.port);
 				}
 			}
+		}
+		int current = clock.getElapsedTime().asMilliseconds();
+		if (current != previous) {
+			int steps = current - previous;
+			for (int s = 0; s < steps; ++s) {
+				for (auto it = users.begin(); it != users.end(); ++it) {
+					it->second.update();
+				}
+			}
+			previous = current;
 		}
 	}
 }

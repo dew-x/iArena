@@ -15,6 +15,7 @@ struct Message {
 	};
 	Message::Type t;
 	int ts;
+	unsigned uid;
 	union
 	{
 		struct {
@@ -44,6 +45,7 @@ class Protocol
 {
 private:
 	static sf::Clock _clock;
+	static unsigned id;
 	static int now();
 	static Message make(Message::Type type);
 public:

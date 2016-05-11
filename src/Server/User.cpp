@@ -14,6 +14,7 @@ Message User::message(const Message & m)
 	case Message::LOGIN:
 		break;
 	case Message::UPDATE_KEYS:
+		keys.push_back(m);
 		res = Protocol::nKeys();
 		break;
 	case Message::NOTIFY_KEYS:
@@ -24,4 +25,8 @@ Message User::message(const Message & m)
 		break;
 	}
 	return res;
+}
+
+void User::update()
+{
 }

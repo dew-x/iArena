@@ -13,18 +13,14 @@ const char* Protocol::encode(const Message &m)
 
 Message Protocol::rLogin(const char nick[12])
 {
-	Message m;
-	m.t = Message::REQUEST_LOGIN;
-	m.ts = now();
+	Message m = make(Message::REQUEST_LOGIN);
 	strcpy_s(m.As.rLogin.nick, 12, nick);
 	return m;
 }
 
 Message Protocol::Login(unsigned uid, float x, float y)
 {
-	Message m;
-	m.t = Message::LOGIN;
-	m.ts = now();
+	Message m = make(Message::LOGIN);
 	m.As.Login.uid = uid;
 	m.As.Login.x = x;
 	m.As.Login.y = y;
@@ -33,9 +29,7 @@ Message Protocol::Login(unsigned uid, float x, float y)
 
 Message Protocol::uKeys(bool w, bool a, bool s, bool d)
 {
-	Message m;
-	m.t = Message::UPDATE_KEYS;
-	m.ts = now();
+	Message m = make(Message::UPDATE_KEYS);
 	m.As.uKeys.w = w;
 	m.As.uKeys.a = a;
 	m.As.uKeys.s = s;
@@ -71,7 +65,9 @@ Message Protocol::make(Message::Type type)
 	Message m;
 	m.t = type;
 	m.ts = now();
+	m.uid = id++;
 	return m;
 }
 
 sf::Clock Protocol::_clock = sf::Clock();
+unsigned Protocol::id = 0;

@@ -2,6 +2,7 @@
 #include <SFML\Network.hpp>
 #include <string>
 #include <PROTO\Protocol.h>
+#include <vector>
 using namespace std;
 
 struct User {
@@ -12,5 +13,7 @@ struct User {
 	int uid;
 	float x, y;
 	Message message(const Message &m);
+	std::vector<Message> keys;
+	void update();
 };
 
