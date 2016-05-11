@@ -29,4 +29,6 @@ Message User::message(const Message & m)
 
 void User::update()
 {
+	x += dx * SPEED;
+	y += dy * SPEED;
 }

@@ -12,6 +12,7 @@ struct User {
 	string nick;
 	int uid;
 	float x, y;
+	float dx, dy;
 	Message message(const Message &m);
 	std::vector<Message> keys;
 	void update();
