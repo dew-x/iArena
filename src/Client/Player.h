@@ -10,8 +10,8 @@ public:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void setDirection(sf::Vector2f dir);
 	void updatePos(float dt);
-	void loadSprite();
-	void updateDirection(sf::Vector2f mousePosition);
+	void loadSprite(float size);
+	void updateViewDirection(sf::Vector2f mousePosition);
 	
 private:
 

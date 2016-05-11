@@ -11,7 +11,7 @@ Player::Player(unsigned uid, float x, float y , float size)
 	direction.y = 0.0f;
 	position.x = x;
 	position.y = y;
-	loadSprite();
+	loadSprite(size);
 }
 
 
@@ -35,16 +35,18 @@ void Player::updatePos(float dt){
 	position += (direction*dt);
 }
 
-void Player::loadSprite(){
-	if (!t.loadFromFile("player.gif")) {
+void Player::loadSprite(float size){
+	if (!t.loadFromFile("textures/player.gif")) {
 		//error
 	}
 
 	ps.setTexture(t);
+	ps.setOrigin(ps.getLocalBounds().width/2, ps.getLocalBounds().height / 2);
+	ps.setScale(size/ps.getLocalBounds().width , size/ ps.getLocalBounds().width );
 	ps.setPosition(position);
 }
 
-void Player::updateDirection(sf::Vector2f mousePosition){
+void Player::updateViewDirection(sf::Vector2f mousePosition){
 	sf::Vector2f dir = mousePosition - position;
 	float length = sqrt((dir.x*dir.x)+(dir.y*dir.y));
 	direction = dir / length;

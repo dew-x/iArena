@@ -24,15 +24,27 @@ Game::Game()
 
 
 	//load images
-	if (!b.loadFromFile("grass.jpg"))
+	if (!b.loadFromFile("textures/grass.jpg"))
 	{
 		// error...
 	}
-
-	
 	background.setTexture(b);
 	background.setPosition(0, 0);
+
+
+	//create scope
+	sf::Texture s;
+	if (!s.loadFromFile("textures/scope.gif"))
+	{
+		// error...
+	}
 	
+	scope.setTexture(s);
+	scope.setOrigin(scope.getLocalBounds().width / 2, scope.getLocalBounds().height / 2);
+	app.setMouseCursorVisible(false);
+	
+
+
 	
 }
 
@@ -94,7 +106,7 @@ void Game::run()
 				}
 			}
 		}
-		app.clear(sf::Color::Black);
+		app.clear(sf::Color(0,0,0,128));
 		if (scene == SCENE_LOGIN) {
 			drawLogin();
 		}
@@ -142,7 +154,7 @@ void Game::drawLoading()
 		while (!C->empty()) {
 			Message m = C->poll();
 			if (m.t == Message::LOGIN) {
-				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y, width*0.01f);
+				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y, width*0.05f);
 				break;
 			}
 		}
@@ -157,6 +169,8 @@ void Game::doGame(sf::Time dt)
 
 void Game::updateGame(sf::Time dt) {
 	P->updatePos(dt.asMilliseconds());
+	//sf::Vector2i mousePos = sf::Mouse
+	scope.setPosition(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
 }
 
 void Game::drawGame() {
@@ -178,6 +192,8 @@ void Game::drawGame() {
 
 	//draw other players
 	app.setView(app.getDefaultView());
+
+	app.draw(scope);
 }
 
 void Game::updateMovement(){

@@ -41,7 +41,11 @@ private:
 	thread T;
 	Player *P;
 	sf::Clock deltaClock;
+
+	//sprites
 	sf::Texture b;
+	sf::Sprite scope;
 	sf::Sprite background;
+	
 };
 
