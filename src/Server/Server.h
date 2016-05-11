@@ -7,7 +7,6 @@
 #include <PROTO\Protocol.h>
 #include <unordered_map>
 #include "User.h"
-#include <Windows.h>
 using namespace std;
 
 typedef unordered_map<string, User>::const_iterator iter;

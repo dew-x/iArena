@@ -3,6 +3,7 @@
 #include <string>
 #include <PROTO\Protocol.h>
 #include <vector>
+#include "const.h"
 using namespace std;
 
 struct User {

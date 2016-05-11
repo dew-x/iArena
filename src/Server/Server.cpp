@@ -31,7 +31,6 @@ void Server::run()
 	while (true) {
 		sf::Socket::Status s = socket.receive(in, sizeof(in), received, sender, senderPort);
 		if (received != 0) {
-			Sleep(200);
 			Message got = Protocol::decode(in);
 			if (got.t < Message::MAX) {
 				string UUID = (string)sender.toString() + to_string(senderPort);
