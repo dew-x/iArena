@@ -15,14 +15,18 @@ public:
 	void loadSprite(float size);
 	void setRotation(float angle);
 	sf::Vector2f getPosition();
-	
+	sf::Vector2f getVelocity();
 private:
 
 	sf::CircleShape circle;
+
 	sf::Vector2f direction;
 	sf::Vector2f position;
 	sf::Vector2f acceleration;
+	sf::Vector2f velocity;
 	sf::Vector2f aMul;
+
+	//sprite of player
 	sf::Texture t;
 	sf::Sprite ps;
 };

@@ -13,6 +13,7 @@ Player::Player(unsigned uid, float x, float y , float size)
 	loadSprite(size);
 	acceleration = { 0.0f, 0.0f };
 	aMul = { 0.0f, 0.0f };
+	velocity = { 0.0f, 0.0f };
 }
 
 
@@ -72,5 +73,10 @@ void Player::setRotation(float angle){
 sf::Vector2f Player::getPosition()
 {
 	return position;
+}
+
+sf::Vector2f Player::getVelocity()
+{
+	return ;
 }
 
