@@ -8,7 +8,7 @@ const unsigned MWIDTH = 100;
 const unsigned MHEIGHT = 100;
 const unsigned MSIZE = 200;
 const float SPEED = 0.3f;
-const float ACELERATION = 0.1f;
+const float ACELERATION = 0.001f;
 
 const float M_PI = 3.1415927410125732421875;
 

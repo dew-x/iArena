@@ -39,9 +39,12 @@ void Player::setDirection(sf::Vector2f dir){
 //input -> vector2f, dir of acceleration
 //set aMul multiplayer  and set acceleration 
 void Player::setAcceleration(sf::Vector2f dir){	
-	//acceleration *= ACELERATION;
-	if (sgn(acceleration.x) != sgn(dir.x)) acceleration.x = acceleration.x * -1.0f;
-	if (sgn(acceleration.y) != sgn(dir.y)) acceleration.y = acceleration.y * -1.0f;
+	int sgax = sgn(acceleration.x);
+	int sgay = sgn(acceleration.y);
+	int sgdx = sgn(dir.x);
+	int sgdy = sgn(dir.y);
+	if (sgax != sgdx) acceleration.x = (sgax - sgdx) * ACELERATION;
+	if (sgay != sgdy) acceleration.y = (sgay - sgdy) * ACELERATION;
 	
 }
 
@@ -58,6 +61,7 @@ void Player::updatePos(float dt) {
 	velocity += acceleration * dt;
 	velocity.x = std::min(velocity.x,SPEED);
 	velocity.y = std::min(velocity.y, SPEED);
+	ps.setPosition(position);
 }
 
 void Player::loadSprite(float size){
