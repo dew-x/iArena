@@ -91,18 +91,16 @@ sf::Vector2f Player::getPosition()
 
 
 void Player::rectificateA(float dt , sf::Vector2f dir) {
-	sf::Vector2f a;
 	if (sgn(acceleration.x) == sgn(dir.x)) {
 		float distance1 = (V0.x*dt) + ((acceleration.x*dt*dt)*0.5f);
 		float deltaT = -((2 * distance1) / (velocity.x - SPEED));
-		a.x = (SPEED - velocity.x) / deltaT;
+		acceleration.x = (SPEED - velocity.x) / deltaT;
 	}
 	if (sgn(acceleration.y) == sgn(dir.y)){
 		float distance1 = (V0.y*dt) + ((acceleration.y*dt*dt)*0.5f);
 		float deltaT = -((2 * distance1) / (velocity.y - SPEED));
-		a.y = (SPEED - velocity.y) / deltaT;
+		acceleration.y = (SPEED - velocity.y) / deltaT;
 	}
-	acceleration = a;
 }
 
 
