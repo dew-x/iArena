@@ -219,7 +219,7 @@ void Game::updateGame(sf::Time dt) {
 					if (orders[i].As.uKeys.d) {
 						dir.x += 1.0f;
 					}
-					P->rectificateA((float)dt.asMilliseconds(),dir);
+					P->rectificateA(delta,dir);
 				}
 			}
 			break;
