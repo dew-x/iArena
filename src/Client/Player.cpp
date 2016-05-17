@@ -37,15 +37,9 @@ void Player::setDirection(sf::Vector2f dir){
 //setAcceleration
 //input -> vector2f, dir of acceleration
 //set aMul multiplayer  and set acceleration 
-void Player::setAcceleration(sf::Vector2f dir){
-	if (direction.x != dir.x) {
-		aMul.x = 0.0f;
-	}
-
-	if (direction.y != dir.y) {
-		aMul.y = 0.0f;
-	}
-	//acceleration = direction - dir;
+void Player::setAcceleration(sf::Vector2f dir){	
+	if (sgn(acceleration.x) != sgn(dir.x)) acceleration.x = acceleration.x * -1.0f;
+	if (sgn(acceleration.y) != sgn(dir.y)) acceleration.y = acceleration.y * -1.0f;
 }
 
 //void Player::updatePos(float dt){
@@ -57,7 +51,7 @@ void Player::setAcceleration(sf::Vector2f dir){
 //}
 
 void Player::updatePos(float dt) {
-	position += direction + velocity*dt + (acceleration*dt*dt)*0.5f;
+	position += velocity*dt + (acceleration*dt*dt)*0.5f;
 	velocity += acceleration * dt;
 	velocity.x = std::min(velocity.x,SPEED);
 	velocity.y = std::min(velocity.y, SPEED);

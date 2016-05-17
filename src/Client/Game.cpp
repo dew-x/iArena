@@ -269,7 +269,7 @@ void Game::updateMovement(){
 	);
 	C->send(m);
 	orders.push_back(m);
-	/*sf::Vector2f dir = { 0.0f,0.0f };
+	sf::Vector2f dir = { 0.0f,0.0f };
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		dir.y -= 1.0f;
 	} 
@@ -282,6 +282,6 @@ void Game::updateMovement(){
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		dir.x += 1.0f;
 	}
-	P->setAcceleration(dir);*/
+	P->setAcceleration(dir);
 
 }
