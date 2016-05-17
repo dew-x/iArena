@@ -43,14 +43,14 @@ void Player::setAcceleration(sf::Vector2f dir){
 	int sgdx = sgn(dir.x);
 	int sgdy = sgn(dir.y);
 
-	if (sgax != sgdx) acceleration.x = (sgdx - sgax) * ACELERATION;
-	if (sgay != sgdy) acceleration.y = (sgdy - sgay) * ACELERATION;
-
-	if (dir.x != 0.0f) V0.x = 0.0f;
-	if (dir.y != 0.0f) V0.y = 0.0f;
-	if (dir.x == 0.0f) V0.x = SPEED * sgdx;
-	if (dir.y == 0.0f) V0.y = SPEED * sgdy;
-	
+	if (sgax != sgdx) {
+		acceleration.x = (sgdx - sgax) * ACELERATION;
+		V0.x = velocity.x;
+	}
+	if (sgay != sgdy) {
+		acceleration.y = (sgdy - sgay) * ACELERATION;
+		V0.y = velocity.y;
+	}
 }
 
 //void Player::updatePos(float dt){
