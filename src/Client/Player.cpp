@@ -11,9 +11,10 @@ Player::Player(unsigned uid, float x, float y , float size)
 	position.x = x;
 	position.y = y;
 	loadSprite(size);
-	acceleration = { 0.0f, 0.0f };
+	acceleration = 0.0f;
+	velocity = 0.0f;
+	V0 = 0.0f;
 	aMul = { 0.0f, 0.0f };
-	velocity = { 0.0f, 0.0f };
 }
 
 
@@ -44,15 +45,20 @@ void Player::setAcceleration(sf::Vector2f dir){
 	if (direction.y != dir.y) {
 		aMul.y = 0.0f;
 	}
-	acceleration = direction - dir;
+	//acceleration = direction - dir;
 }
 
 void Player::updatePos(float dt){
 	aMul.x = std::min(1.0f, aMul.x + 0.01f*dt);
 	aMul.y = std::min(1.0f, aMul.y + 0.01f*dt);
-	position.x += ((direction.x +acceleration.x*aMul.x)*dt)*SPEED;
-	position.y += ((direction.y + acceleration.y*aMul.y)*dt)*SPEED;
+	position.x += ((direction.x +acceleration*aMul.x)*dt)*SPEED;
+	position.y += ((direction.y + acceleration*aMul.y)*dt)*SPEED;
 	ps.setPosition(position);
+}
+
+void Player::updatePos(float dt) {
+	velocity += acceleration * dt;
+	position.x += direction * ()
 }
 
 void Player::loadSprite(float size){
@@ -75,8 +81,19 @@ sf::Vector2f Player::getPosition()
 	return position;
 }
 
-sf::Vector2f Player::getVelocity()
+float Player::getVelocity()
 {
 	return ;
+}
+
+void Player::solverA(float dt) {
+	float distance1 = (V0*dt) + ((acceleration*dt*dt)/2);
+	float deltaT = -((2 * distance1) / velocity - SPEED);
+	float a = (SPEED - velocity) / deltaT;
+	setAceleration(a);
+}
+
+void Player::setAceleration(float a){
+	acceleration = a;
 }
 
