@@ -30,16 +30,19 @@ void Player::draw(sf::RenderTarget & target, sf::RenderStates states) const
 }
 
 void Player::setDirection(sf::Vector2f dir){
-	direction.x = dir.x;
-	direction.y = dir.y;
+	/*direction.x = dir.x;
+	direction.y = dir.y;*/
+
 }
 
 //setAcceleration
 //input -> vector2f, dir of acceleration
 //set aMul multiplayer  and set acceleration 
 void Player::setAcceleration(sf::Vector2f dir){	
+	//acceleration *= ACELERATION;
 	if (sgn(acceleration.x) != sgn(dir.x)) acceleration.x = acceleration.x * -1.0f;
 	if (sgn(acceleration.y) != sgn(dir.y)) acceleration.y = acceleration.y * -1.0f;
+	
 }
 
 //void Player::updatePos(float dt){
