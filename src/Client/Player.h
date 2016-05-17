@@ -16,8 +16,8 @@ public:
 	void setRotation(float angle);
 	sf::Vector2f getPosition();
 	//float getVelocity();
-	void rectificateA(float dt);
-	void setAceleration(sf::Vector2f a);
+	void rectificateA(float dt, sf::Vector2f dir);
+	
 private:
 
 	sf::CircleShape circle;
@@ -27,7 +27,7 @@ private:
 	sf::Vector2f acceleration;
 	sf::Vector2f velocity;
 	sf::Vector2f V0;
-	sf::Vector2f aMul;
+	
 
 	//sprite of player
 	sf::Texture t;

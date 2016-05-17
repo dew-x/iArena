@@ -14,7 +14,6 @@ Player::Player(unsigned uid, float x, float y , float size)
 	acceleration = { 0.0f,0.0f };
 	velocity = { 0.0f,0.0f };
 	V0 = { 0.0f,0.0f };
-	aMul = { 0.0f, 0.0f };
 }
 
 
@@ -43,8 +42,8 @@ void Player::setAcceleration(sf::Vector2f dir){
 	int sgay = sgn(acceleration.y);
 	int sgdx = sgn(dir.x);
 	int sgdy = sgn(dir.y);
-	if (sgax != sgdx) acceleration.x = (sgax - sgdx) * ACELERATION;
-	if (sgay != sgdy) acceleration.y = (sgay - sgdy) * ACELERATION;
+	if (sgax != sgdx) acceleration.x = (sgdx - sgax) * ACELERATION;
+	if (sgay != sgdy) acceleration.y = (sgdy - sgay) * ACELERATION;
 	
 }
 
@@ -89,14 +88,20 @@ sf::Vector2f Player::getPosition()
 //	return ;
 //}
 
-//void Player::rectificateA(float dt) {
-//	sf::Vector2f distance1 = (V0*dt) + ((acceleration*dt*dt)*0.5f);
-//	float deltaT = -((2 * distance1) / velocity - SPEED);
-//	float a = (SPEED - velocity) / deltaT;
-//	setAceleration(a);
-//}
-
-void Player::setAceleration(sf::Vector2f a){
+void Player::rectificateA(float dt , sf::Vector2f dir) {
+	sf::Vector2f a;
+	if (sgn(acceleration.x) == sgn(dir.x)) {
+		float distance1 = (V0.x*dt) + ((acceleration.x*dt*dt)*0.5f);
+		float deltaT = -((2 * distance1) / velocity.x - SPEED);
+		a.x = (SPEED - velocity.x) / deltaT;
+	}
+	if (sgn(acceleration.y) == sgn(dir.y)){
+		float distance1 = (V0.y*dt) + ((acceleration.y*dt*dt)*0.5f);
+		float deltaT = -((2 * distance1) / velocity.y - SPEED);
+		a.y = (SPEED - velocity.y) / deltaT;
+	}
 	acceleration = a;
 }
+
+
 
