@@ -42,10 +42,6 @@ Game::Game()
 		// error...
 	}
 
-	if (!p.loadFromFile("textures/fireBall.gif"))
-	{
-		// error...
-	}
 	
 	scope.setTexture(s);
 	scope.setOrigin(scope.getLocalBounds().width / 2, scope.getLocalBounds().height / 2);
@@ -235,7 +231,7 @@ void Game::updateGame(sf::Time dt) {
 					if (orders[i].As.uKeys.d) {
 						dir.x += 1.0f;
 					}
- 					P->rectificateA(delta,dir);
+ 					P->rectificateA((float)delta,dir);
 				}
 			}
 			break;
@@ -279,9 +275,11 @@ void Game::drawGame() {
 	app.setView(app.getDefaultView());
 
 	app.draw(scope);
+
 }
 
-void Game::updateMovement(){
+void Game::updateMovement() {
+
 	Message m = Protocol::uKeys(
 		sf::Keyboard::isKeyPressed(sf::Keyboard::W), 
 		sf::Keyboard::isKeyPressed(sf::Keyboard::A), 

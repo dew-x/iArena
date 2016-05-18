@@ -3,6 +3,10 @@
 #include <SFML\Graphics.hpp>
 #include <math.h>
 
+inline float magnitude(sf::Vector2f a) {
+	return sqrt((a.x*a.x) + (a.y*a.y));
+}
+
 inline sf::Vector2f dot(sf::Vector2f a, sf::Vector2f b) {
 	return{ a.x*b.x,a.y*b.y };
 }
@@ -16,10 +20,6 @@ inline sf::Vector2f normalize(sf::Vector2f a) {
 inline float RadToDeg(float Rad)
 {
 	return Rad / M_PI * 180.f;
-}
-
-inline float magnitude(sf::Vector2f a) {
-	return sqrt((a.x*a.x) + (a.y*a.y));	
 }
 
 template <typename T> int sgn(T val) {
