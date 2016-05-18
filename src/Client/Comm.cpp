@@ -33,8 +33,8 @@ void Comm::init()
 				// check if message is valid
 				if (m.t<Message::MAX) {
 					std::string buff = in;
-					cout << s << " " << buff << " " << received << " " << sender << " " << senderPort << endl;
-					cout << m.t << " " << m.ts << " " << m.As.Login.uid << " " << m.As.Login.x << " " << m.As.Login.y << endl;
+					/*cout << s << " " << buff << " " << received << " " << sender << " " << senderPort << endl;
+					cout << m.t << " " << m.ts << " " << m.As.Login.uid << " " << m.As.Login.x << " " << m.As.Login.y << endl;*/
 					queue.push_back(m);
 					// sort to proper order
 					while (pos >= 0 && queue[pos].ts > queue[pos + 1].ts) {
