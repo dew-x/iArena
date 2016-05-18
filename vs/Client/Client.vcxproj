@@ -30,6 +30,7 @@
     <ClInclude Include="..\..\include\PROTO\Protocol.h" />
     <ClInclude Include="..\..\src\Client\Comm.h" />
     <ClInclude Include="..\..\src\Client\const.h" />
+    <ClInclude Include="..\..\src\Client\functions.h" />
     <ClInclude Include="..\..\src\Client\Game.h" />
     <ClInclude Include="..\..\src\Client\Map.h" />
     <ClInclude Include="..\..\src\Client\Player.h" />
