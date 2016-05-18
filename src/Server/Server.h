@@ -20,6 +20,7 @@ public:
 	~Server();
 	void run();
 private:
+	void broadcast(string UUID, const Message &m);
 	sf::UdpSocket socket;
 	unsigned port;
 	unordered_map<string,User> users;

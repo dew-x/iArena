@@ -1,10 +1,11 @@
 #include "User.h"
 
-Message User::message(const Message & m, map<int, Entity*> entities)
+Message User::message(const Message & m, map<int, Entity*> entities, Message &broadcast)
 {
 	Message res;
 	sf::Vector2f ndir = { 0.0f,0.0f }, sdir, edir;
-	vector<hitData> collisions;
+	vector<hitData> collisions(0);
+	vector<entityData> others(0);
 	res.t = Message::NONE;
 	float dist;
 	switch (m.t)
@@ -12,7 +13,12 @@ Message User::message(const Message & m, map<int, Entity*> entities)
 	case Message::NONE:
 		break;
 	case Message::REQUEST_LOGIN:
-		res = Protocol::Login(uid, position.x, position.y);
+		for (map<int, Entity*>::iterator it = entities.begin(); it != entities.end(); ++it) {
+			if (it->first != uid) {
+				others.push_back(it->second->getData());
+			}
+		}
+		res = Protocol::Login(uid, position.x, position.y, others);
 		break;
 	case Message::LOGIN:
 		break;
@@ -24,6 +30,7 @@ Message User::message(const Message & m, map<int, Entity*> entities)
 		if (m.As.uKeys.s) ndir.y += 1.0f;
 		if (m.As.uKeys.d) ndir.x += 1.0f;
 		this->dir = ndir;
+		broadcast = Protocol::updateState(getData());
 		break;
 	case Message::NOTIFY_KEYS:
 		break;
@@ -54,3 +61,7 @@ Message User::message(const Message & m, map<int, Entity*> entities)
 	return res;
 }
 
+string User::getName()
+{
+	return nick;
+}

@@ -16,7 +16,8 @@ struct User : public Entity {
 	unsigned short port;
 	int ts;
 	string nick;
-	Message message(const Message &m, map<int, Entity*> entities);
+	Message message(const Message &m, map<int, Entity*> entities, Message &broadcast);
 	std::vector<Message> keys;
+	virtual string getName();
 };
 

@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "projectile.h"
+#include "Enemy.h"
 using namespace std;
 
 enum scenes {
@@ -27,6 +28,7 @@ private:
 	sf::RenderWindow app;
 	sf::Font font;
 	sf::Text typeYourNick;
+	sf::Text fpsText;
 	int width, height;
 	int uid;
 	scenes scene;
@@ -48,14 +50,17 @@ private:
 
 	vector<Message> orders;
 	vector<Projectile> projectiles;
+	vector<Enemy*> enemies;
 	int projectileID;
 
 	//sprites
 	sf::Texture b;
 	sf::Texture s;
 	sf::Texture p;
+	sf::Texture texEnemy;
 	sf::Sprite scope;
 	sf::Sprite background;
+	float fps;
 	
 };
 

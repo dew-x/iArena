@@ -18,14 +18,18 @@ Game::Game()
 	typeYourNick.setOrigin({ typeYourNick.getLocalBounds().width / 2.0f,typeYourNick.getLocalBounds().height / 2.0f });
 	typeYourNick.setPosition({ width / 2.0f,height / 2.2f });
 	typeYourNick.setColor(sf::Color::Red);
+	fpsText = sf::Text("FPS:", font, height / 30);
+	fpsText.setColor(sf::Color::Red);
 	uid = -1;
 	C = NULL;
 	P = NULL;
 	M = NULL;
 	orders = vector<Message>(0);
 	projectiles = vector<Projectile>(0);
+	enemies = vector<Enemy*>(0);
 	deltaClock = sf::Clock();
 	projectileID = 0;
+	fps = 0;
 
 	//load images
 	if (!b.loadFromFile("textures/grass.jpg"))
@@ -42,18 +46,16 @@ Game::Game()
 		// error...
 	}
 
-	if (!p.loadFromFile("textures/fireBall2.gif"))
+	if (!p.loadFromFile("textures/fireBall2.png"))
 	{
 		// error...
 	}
+
+	texEnemy.loadFromFile("textures/player.gif");
 	
 	scope.setTexture(s);
 	scope.setOrigin(scope.getLocalBounds().width / 2, scope.getLocalBounds().height / 2);
 	app.setMouseCursorVisible(false);
-	
-
-
-	
 }
 
 
@@ -65,6 +67,11 @@ Game::~Game()
 		delete C;
 		delete M;
 		delete P;
+	}
+
+	while (enemies.size()) {
+		delete enemies[enemies.size() - 1];
+		enemies.pop_back();
 	}
 }
 
@@ -94,6 +101,7 @@ void Game::run()
 						Projectile projectile;
 						projectileID++;
 						projectiles.push_back(projectile);
+						cout << projectileID << endl;
 						projectiles[projectiles.size() - 1].init(P->getPosition(), d, (width*PLAYERSIZE) / 5, projectileID, p);
 					}
 				}
@@ -146,7 +154,11 @@ void Game::run()
 		else if (scene == SCENE_GAME) {
 			doGame(dt);
 		}
+		fps = 0.99f*fps + 0.01f / dt.asSeconds();
+		fpsText.setString(to_string((int)fps) + " FPS");
+		app.draw(fpsText);
 		app.display();
+		
 	}
 }
 
@@ -186,6 +198,11 @@ void Game::drawLoading()
 			if (m.t == Message::LOGIN) {
 				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y, width*PLAYERSIZE);
 				M = new Map();
+				for (int i = 0; i < m.As.Login.entityCount; ++i) {
+					Enemy * e = new Enemy(m.As.Login.entities[i].id, m.As.Login.entities[i].x, m.As.Login.entities[i].y, m.As.Login.entities[i].name, texEnemy, width*PLAYERSIZE);
+					e->setEncodedDirection(m.As.Login.entities[i].direction);
+					enemies.push_back(e);
+				}
 				break;
 			}
 		}
@@ -207,10 +224,14 @@ void Game::updateGame(sf::Time dt) {
 		projectiles[i].updatePos((float)dt.asMilliseconds());
 	}
 
+	for (unsigned i = 0; i < enemies.size(); i++) {
+		enemies[i]->update((float)dt.asMilliseconds());
+	}
+
 	scope.setPosition((float)sf::Mouse::getPosition().x,(float) sf::Mouse::getPosition().y);
 	while (!C->empty()) {
 		Message m = C->poll();
-		
+		Enemy *e;
 		switch (m.t)
 		{
 		case Message::NONE:
@@ -246,7 +267,17 @@ void Game::updateGame(sf::Time dt) {
 		case Message::FIRE_WEAPON:
 			break;
 		case Message::FIRE_RESULT:
-
+			break;
+		case Message::SPAWN:
+			e=new Enemy(m.As.spawn.id, m.As.spawn.x, m.As.spawn.y, m.As.spawn.name, texEnemy, width*PLAYERSIZE);
+			enemies.push_back(e);
+			break;
+		case Message::UPDATE_STATE:
+			for (unsigned i = 0; i < enemies.size(); ++i) {
+				if (enemies[i]->getID() == m.As.uState.data.id) {
+					enemies[i]->updateState(m.As.uState.data);
+				}
+			}
 			break;
 		case Message::MAX:
 			break;
@@ -272,12 +303,15 @@ void Game::drawGame() {
 	app.setView(view);
 	app.draw(*M);
 	app.draw(*P);
-	
+	// draw enemies
+	for (unsigned i = 0; i < enemies.size(); i++) {
+		app.draw(*enemies[i]);
+	}
 	for (unsigned i = 0; i < projectiles.size(); i++) {
 		app.draw(projectiles[i]);
 	}
 
-	// draw enemies
+	
 
 	//draw other players
 	app.setView(app.getDefaultView());

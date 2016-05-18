@@ -15,17 +15,12 @@ public:
 	void updatePos(float dt);
 
 private:
-	void loadSprite(float size);
 	sf::Vector2f position;
 	sf::Vector2f direction;
 	sf::Vector2f velocity;
 
-	Projectile *proj;
-
 	int id;
-	
 	//sprite of player
-	sf::Texture t;
 	sf::Sprite ps;
 };
 

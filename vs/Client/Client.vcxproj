@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\include\PROTO\Protocol.cpp" />
     <ClCompile Include="..\..\src\Client\Comm.cpp" />
+    <ClCompile Include="..\..\src\Client\Enemy.cpp" />
     <ClCompile Include="..\..\src\Client\Game.cpp" />
     <ClCompile Include="..\..\src\Client\main.cpp" />
     <ClCompile Include="..\..\src\Client\Map.cpp" />
@@ -31,6 +32,7 @@
     <ClInclude Include="..\..\include\PROTO\Protocol.h" />
     <ClInclude Include="..\..\src\Client\Comm.h" />
     <ClInclude Include="..\..\src\Client\const.h" />
+    <ClInclude Include="..\..\src\Client\Enemy.h" />
     <ClInclude Include="..\..\src\Client\functions.h" />
     <ClInclude Include="..\..\src\Client\Game.h" />
     <ClInclude Include="..\..\src\Client\Map.h" />

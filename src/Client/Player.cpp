@@ -4,9 +4,6 @@
 
 Player::Player(unsigned uid, float x, float y , float size)
 {
-	circle = sf::CircleShape(size);
-	circle.setOrigin({ circle.getLocalBounds().width / 2.0f,circle.getLocalBounds().height / 2.0f });
-	circle.setFillColor(sf::Color::Green);
 	direction = { 0.0f, 0.0f };
 	position.x = x;
 	position.y = y;

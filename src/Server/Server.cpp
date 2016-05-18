@@ -20,6 +20,7 @@ void Server::run()
 		return;
 	}
 	cout << "Server is listening to port " << port << endl;
+	cout << "Protocol message size: " << sizeof(Message) << endl;
 	socket.setBlocking(false);
 	char in[sizeof(Message)];
 	memset(in, '\0', sizeof(Message));
@@ -47,10 +48,14 @@ void Server::run()
 					entities[cuid] = &users[UUID];
 					++cuid;
 					cout << "Current users: " << cuid << endl;
+					// broadcast login
+					broadcast(UUID,Protocol::spawn(1000.0f, 1000.0f, newUser.uid, got.As.rLogin.nick));
 				}
 				if (users.count(UUID)>0) {
 					User *u = &users[UUID];
-					Message res = u->message(got,entities);
+					Message tobroadcast=Protocol::make(Message::NONE);
+					Message res = u->message(got,entities, tobroadcast);
+					if (tobroadcast.t!=Message::NONE) broadcast(UUID, tobroadcast);
 					if (res.t != Message::NONE) socket.send(Protocol::encode(res), sizeof(Message) , u->ip, u->port);
 				}
 			}
@@ -64,6 +69,16 @@ void Server::run()
 				}
 			}
 			previous = current;
+		}
+	}
+}
+
+void Server::broadcast(string UUID, const Message &m)
+{
+	const char *data = Protocol::encode(m);
+	for (auto it = users.begin(); it != users.end(); ++it) {
+		if (it->first != UUID) {
+			socket.send(data, sizeof(Message), it->second.ip, it->second.port);
 		}
 	}
 }

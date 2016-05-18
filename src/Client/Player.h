@@ -20,9 +20,6 @@ public:
 	void rectificateA(float dt, sf::Vector2f dir);
 	
 private:
-
-	sf::CircleShape circle;
-
 	sf::Vector2f direction;
 	sf::Vector2f position;
 	sf::Vector2f acceleration;

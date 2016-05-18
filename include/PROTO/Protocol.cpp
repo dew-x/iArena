@@ -18,12 +18,16 @@ Message Protocol::rLogin(const char nick[12])
 	return m;
 }
 
-Message Protocol::Login(unsigned uid, float x, float y)
+Message Protocol::Login(unsigned uid, float x, float y, const std::vector<entityData> &others)
 {
 	Message m = make(Message::LOGIN);
 	m.As.Login.uid = uid;
 	m.As.Login.x = x;
 	m.As.Login.y = y;
+	m.As.Login.entityCount = others.size();
+	for (unsigned i = 0; i < others.size(); ++i) {
+		m.As.Login.entities[i] = others[i];
+	}
 	return m;
 }
 
@@ -56,6 +60,23 @@ Message Protocol::fireWeapon(float x, float y, int id)
 Message Protocol::fireResult(std::vector<hitData> collisions)
 {
 	return make(Message::FIRE_RESULT);
+}
+
+Message Protocol::spawn(float x, float y, int id, const char nick[12])
+{
+	Message m = make(Message::SPAWN);
+	m.As.spawn.id = id;
+	m.As.spawn.x = x;
+	m.As.spawn.y = y;
+	strcpy_s(m.As.spawn.name, 12, nick);
+	return m;
+}
+
+Message Protocol::updateState(const entityData & data)
+{
+	Message m = make(Message::UPDATE_STATE);
+	m.As.uState.data = data;
+	return m;
 }
 
 int Protocol::now()
