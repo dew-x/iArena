@@ -12,3 +12,12 @@ inline sf::Vector2f normalize(sf::Vector2f a) {
 	if (module == 0) return{ 0.0f, 0.0f};
 	else return{a.x/module, a.y/module};
 }
+
+inline float RadToDeg(float Rad)
+{
+	return Rad / M_PI * 180.f;
+}
+
+template <typename T> int sgn(T val) {
+	return (T(0) < val) - (val < T(0));
+}

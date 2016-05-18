@@ -25,6 +25,7 @@
     <ClCompile Include="..\..\src\Client\main.cpp" />
     <ClCompile Include="..\..\src\Client\Map.cpp" />
     <ClCompile Include="..\..\src\Client\Player.cpp" />
+    <ClCompile Include="..\..\src\Client\Projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\PROTO\Protocol.h" />
@@ -34,6 +35,7 @@
     <ClInclude Include="..\..\src\Client\Game.h" />
     <ClInclude Include="..\..\src\Client\Map.h" />
     <ClInclude Include="..\..\src\Client\Player.h" />
+    <ClInclude Include="..\..\src\Client\Projectile.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A70F2C5B-0859-4472-B465-81DC64D640BF}</ProjectGuid>

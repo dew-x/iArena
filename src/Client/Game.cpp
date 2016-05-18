@@ -23,6 +23,7 @@ Game::Game()
 	P = NULL;
 	M = NULL;
 	orders = vector<Message>(0);
+	projectiles = vector<Projectile>(0);
 	deltaClock = sf::Clock();
 
 
@@ -81,7 +82,11 @@ void Game::run()
 			else if (event.type == sf::Event::MouseButtonPressed){
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
-					Protocol::fireWeapon(sf::Mouse::getPosition().x-(width/2.0f), sf::Mouse::getPosition().y - (height/2.0f));
+					sf::Vector2f d = { sf::Mouse::getPosition().x - (width / 2.0f) , sf::Mouse::getPosition().y - (height / 2.0f)};
+					d = normalize(d);
+					C->send(Protocol::fireWeapon(d.x,d.y));
+					Projectile projectile(P->getPosition(), d, (width*PLAYERSIZE)/2 );
+					projectiles.push_back(projectile);
 				}
 			}
 			
@@ -170,7 +175,7 @@ void Game::drawLoading()
 		while (!C->empty()) {
 			Message m = C->poll();
 			if (m.t == Message::LOGIN) {
-				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y, width*0.05f);
+				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y, width*PLAYERSIZE);
 				M = new Map();
 				break;
 			}
@@ -188,6 +193,11 @@ void Game::updateGame(sf::Time dt) {
 	P->updatePos((float)dt.asMilliseconds());
 	float radians = atan2(sf::Mouse::getPosition().y - height / 2.0f, sf::Mouse::getPosition().x - width / 2.0f);
 	P->setRotation(RadToDeg(radians));
+
+	for (unsigned i = 0; i < projectiles.size(); i++) {
+		projectiles[i].updatePos((float)dt.asMilliseconds());
+	}
+
 	scope.setPosition((float)sf::Mouse::getPosition().x,(float) sf::Mouse::getPosition().y);
 	while (!C->empty()) {
 		Message m = C->poll();
@@ -220,13 +230,14 @@ void Game::updateGame(sf::Time dt) {
 					if (orders[i].As.uKeys.d) {
 						dir.x += 1.0f;
 					}
-					P->rectificateA(delta,dir);
+ 					P->rectificateA(delta,dir);
 				}
 			}
 			break;
 		case Message::FIRE_WEAPON:
 			break;
 		case Message::FIRE_RESULT:
+
 			break;
 		case Message::MAX:
 			break;
@@ -252,6 +263,10 @@ void Game::drawGame() {
 	app.setView(view);
 	app.draw(*M);
 	app.draw(*P);
+	
+	for (unsigned i = 0; i < projectiles.size(); i++) {
+		app.draw(projectiles[i]);
+	}
 
 	// draw enemies
 

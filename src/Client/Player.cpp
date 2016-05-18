@@ -131,3 +131,5 @@ void Player::rectificateA(float dt , sf::Vector2f dir) {
 
 
 
+
+

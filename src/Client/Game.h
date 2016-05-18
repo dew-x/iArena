@@ -7,6 +7,7 @@
 #include "Comm.h"
 #include "Player.h"
 #include "Map.h"
+#include "projectile.h"
 using namespace std;
 
 enum scenes {
@@ -46,6 +47,8 @@ private:
 	Map *M;
 
 	vector<Message> orders;
+	vector<Projectile> projectiles;
+
 	//sprites
 	sf::Texture b;
 	sf::Texture s;
