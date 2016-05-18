@@ -16,7 +16,6 @@ public:
 	void loadSprite(float size);
 	void setRotation(float angle);
 	sf::Vector2f getPosition();
-	void setVelocity(float x , float y);
 	void rectificateA(float dt, sf::Vector2f dir);
 	
 private:
@@ -28,6 +27,7 @@ private:
 	sf::Vector2f acceleration;
 	sf::Vector2f velocity;
 	sf::Vector2f V0;
+	sf::Vector2f VF;
 	
 
 	//sprite of player

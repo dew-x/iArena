@@ -14,6 +14,7 @@ Player::Player(unsigned uid, float x, float y , float size)
 	acceleration = { 0.0f,0.0f };
 	velocity = { 0.0f,0.0f };
 	V0 = { 0.0f,0.0f };
+	VF = { SPEED,SPEED };
 }
 
 
@@ -45,14 +46,21 @@ void Player::setAcceleration(sf::Vector2f dir){
 	std::cout << "P0 " << position.x << " " << position.y << std::endl;
 	std::cout << "V0 " << velocity.x << " " << velocity.y << std::endl;
 	std::cout << "A0 " << acceleration.x << " " << acceleration.y << std::endl;
+
 	if (sgax != sgdx) {
 		acceleration.x = (sgdx - sgax) * ACELERATION;
 		V0.x = velocity.x;
+		if (velocity.x != 0.0f) VF.x = SPEED * sgdx;
+		else VF.x = 0;
 	}
+
 	if (sgay != sgdy) {
 		acceleration.y = (sgdy - sgay) * ACELERATION;
 		V0.y = velocity.y;
+		if (velocity.y != 0.0f) VF.y = SPEED * sgdy;
+		else VF.y = 0;
 	}
+
 	std::cout << "P1 " << position.x << " " << position.y << std::endl;
 	std::cout << "V1 " << velocity.x << " " << velocity.y << std::endl;
 	std::cout << "A1 " << acceleration.x << " " << acceleration.y << std::endl;
@@ -96,15 +104,32 @@ sf::Vector2f Player::getPosition()
 
 
 void Player::rectificateA(float dt , sf::Vector2f dir) {
+	sf::Vector2f deltaV = VF - V0;
 	if (sgn(acceleration.x) == sgn(dir.x) && dir.x) {
-		float distance1 = (V0.x*dt) + ((acceleration.x*dt*dt)*0.5f);
+		/*float distance1 = (V0.x*dt) + ((acceleration.x*dt*dt)*0.5f);
 		float deltaT = -((2 * distance1) / (velocity.x - SPEED));
-		acceleration.x = (SPEED - velocity.x) / deltaT;
+		acceleration.x = (SPEED - velocity.x) / deltaT;*/
+
+		// segon metode
+		/*float distance1 = (V0.x*dt) + ((acceleration.x*dt*dt)*0.5f);
+		acceleration.x = ((VF.x-V0.x)*(VF.x-V0.x)*1.5f) / distance1;*/
+
+		//tercer metode
+		float distance1 = (V0.x*dt) + ((acceleration.x*dt*dt)*0.5f);
+		acceleration.x = (deltaV.x * (VF.x - V0.x + (deltaV.x / 2))) / distance1;
 	}
 	if (sgn(acceleration.y) == sgn(dir.y) && dir.y){
-		float distance1 = (V0.y*dt) + ((acceleration.y*dt*dt)*0.5f);
+		/*float distance1 = (V0.y*dt) + ((acceleration.y*dt*dt)*0.5f);
 		float deltaT = -((2 * distance1) / (velocity.y - SPEED));
-		acceleration.y = (SPEED - velocity.y) / deltaT;
+		acceleration.y = (SPEED - velocity.y) / deltaT;*/
+
+		//segon metode
+		/*float distance1 = (V0.y*dt) + ((acceleration.y*dt*dt)*0.5f);
+		acceleration.y = ((VF.y - V0.y)*(VF.y - V0.y)*1.5f) / distance1;*/
+
+		//tercer metode
+		float distance1 = (V0.y*dt) + ((acceleration.y*dt*dt)*0.5f);
+		acceleration.y = (deltaV.y * (VF.y - V0.y + (deltaV.y/2))) / distance1;
 	}
 	std::cout << "P " << position.x << " " << position.y << std::endl;
 	std::cout << "V " << velocity.x << " " << velocity.y << std::endl;
