@@ -38,33 +38,31 @@ void Player::setDirection(sf::Vector2f dir){
 //input -> vector2f, dir of acceleration
 //set aMul multiplayer  and set acceleration 
 void Player::setAcceleration(sf::Vector2f dir){	
-
 	//signs of acceleration and direction
-	int sgax = sgn(acceleration.x);
-	int sgay = sgn(acceleration.y);
-	int sgdx = sgn(dir.x);
-	int sgdy = sgn(dir.y);
-
+	int nx = abs(sgn(dir.x));
+	int ny = abs(sgn(dir.y));
+	int ox = sgn(direction.x);
+	int oy = sgn(direction.y);
 	//print print information
 	std::cout << "P0 " << position.x << " " << position.y << std::endl;
 	std::cout << "V0 " << velocity.x << " " << velocity.y << std::endl;
 	std::cout << "A0 " << acceleration.x << " " << acceleration.y << std::endl;
 
 	//if signs of direction and acceleration are diferents, update acceleration with new sign
-	if (sgax != sgdx) {
-		acceleration.x = (sgdx - sgax) * ACELERATION;
+	if (nx != ox) {
+		acceleration.x = (nx - ox) * ACELERATION;
 		V0.x = velocity.x;
 	}
 
-	if (sgay != sgdy) {
-		acceleration.y = (sgdy - sgay) * ACELERATION;
+	if (ny != oy) {
+		acceleration.y = (ny - oy) * ACELERATION;
 		V0.y = velocity.y;
-
 	}
 
 	std::cout << "P1 " << position.x << " " << position.y << std::endl;
 	std::cout << "V1 " << velocity.x << " " << velocity.y << std::endl;
 	std::cout << "A1 " << acceleration.x << " " << acceleration.y << std::endl;
+	direction = dir;
 }
 
 //void Player::updatePos(float dt){
@@ -75,16 +73,23 @@ void Player::setAcceleration(sf::Vector2f dir){
 //	ps.setPosition(position);
 //}
 
+sf::Vector2f dot(sf::Vector2f a, sf::Vector2f b) {
+	return{ a.x*b.x,a.y*b.y };
+}
+
 void Player::updatePos(float dt) {
-	position += velocity*dt + (acceleration*dt*dt)*0.5f;
 	velocity += acceleration * dt;
-
-	if (acceleration.x > 0.0f) velocity.x = std::max(std::min(velocity.x, SPEED), 0.0f);
+	velocity.y = std::max(std::min(velocity.y, SPEED), 0.0f);
+	velocity.x = std::max(std::min(velocity.x, SPEED), 0.0f);
+	/*if (direction.x > 0.0f) velocity.x = std::max(std::min(velocity.x, SPEED), 0.0f);
 	else velocity.x = std::max(std::min(velocity.x, 0.0f), -SPEED);
-	
 
-	if(acceleration.y > 0.0f) velocity.y = std::max(std::min(velocity.y, SPEED),0.0f);
-	else velocity.y = std::max(std::min(velocity.y, 0.0f), -SPEED);
+
+	if (direction.y > 0.0f) velocity.y = std::max(std::min(velocity.y, SPEED), 0.0f);
+	else velocity.y = std::max(std::min(velocity.y, 0.0f), -SPEED);*/
+
+	position += dot(direction,velocity*dt);
+	
 	ps.setPosition(position);
 }
 

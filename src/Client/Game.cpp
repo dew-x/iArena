@@ -8,6 +8,7 @@ Game::Game()
 	height = sf::VideoMode::getDesktopMode().height;
 	app.create(sf::VideoMode::getDesktopMode(), "GAME", sf::Style::Fullscreen);
 	app.setVerticalSyncEnabled(true);
+	app.setKeyRepeatEnabled(false);
 	scene = SCENE_LOGIN;
 	nickpos = 0;
 	memset(nick, 0, NICKSIZE);
