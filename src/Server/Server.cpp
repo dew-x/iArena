@@ -35,13 +35,22 @@ void Server::run()
 			if (got.t < Message::MAX) {
 				string UUID = (string)sender.toString() + to_string(senderPort);
 				if (got.t == Message::REQUEST_LOGIN) {
-					users[UUID] = { sender,senderPort,got.ts,got.As.rLogin.nick,cuid,1000.0f,1000.0f };
+					User newUser;
+					newUser.dir = { 0.0f,0.0f };
+					newUser.ip = sender;
+					newUser.nick = got.As.rLogin.nick;
+					newUser.port = senderPort;
+					newUser.ts = got.ts;
+					newUser.uid = cuid;
+					newUser.position = { 1000.0f,1000.0f };
+					users[UUID] = newUser;
+					entities[cuid] = &users[UUID];
 					++cuid;
 				}
 				if (users.count(UUID)>0) {
-					User u = users[UUID];
-					Message res = u.message(got);
-					if (res.t != Message::NONE) socket.send(Protocol::encode(res), sizeof(Message) , u.ip, u.port);
+					User *u = &users[UUID];
+					Message res = u->message(got,entities);
+					if (res.t != Message::NONE) socket.send(Protocol::encode(res), sizeof(Message) , u->ip, u->port);
 				}
 			}
 		}

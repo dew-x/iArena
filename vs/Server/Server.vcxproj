@@ -20,13 +20,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\include\PROTO\Protocol.cpp" />
+    <ClCompile Include="..\..\src\Server\Entity.cpp" />
     <ClCompile Include="..\..\src\Server\main.cpp" />
+    <ClCompile Include="..\..\src\Server\Monster.cpp" />
     <ClCompile Include="..\..\src\Server\Server.cpp" />
     <ClCompile Include="..\..\src\Server\User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\PROTO\Protocol.h" />
     <ClInclude Include="..\..\src\Server\const.h" />
+    <ClInclude Include="..\..\src\Server\Entity.h" />
+    <ClInclude Include="..\..\src\Server\Monster.h" />
     <ClInclude Include="..\..\src\Server\Server.h" />
     <ClInclude Include="..\..\src\Server\User.h" />
   </ItemGroup>

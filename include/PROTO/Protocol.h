@@ -2,6 +2,14 @@
 #include <SFML\System.hpp>
 #include <iostream>
 
+struct hitData {
+	int uid;
+	unsigned damage;
+	bool kill;
+	int hpleft;
+	int drop;
+};
+
 struct Message {
 	enum Type {
 		NONE,
@@ -36,7 +44,8 @@ struct Message {
 			float x, y;
 		} wFire;
 		struct {
-
+			int size;
+			hitData hits[10];
 		} rFire;
 	} As;
 };

@@ -6,7 +6,9 @@
 #include <string>
 #include <PROTO\Protocol.h>
 #include <unordered_map>
+#include <map>
 #include "User.h"
+#include "Monster.h"
 using namespace std;
 
 typedef unordered_map<string, User>::const_iterator iter;
@@ -21,5 +23,6 @@ private:
 	sf::UdpSocket socket;
 	unsigned port;
 	unordered_map<string,User> users;
+	map<int, Entity*> entities;
 };
 
