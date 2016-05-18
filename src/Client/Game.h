@@ -52,6 +52,7 @@ private:
 	//sprites
 	sf::Texture b;
 	sf::Texture s;
+	sf::Texture p;
 	sf::Sprite scope;
 	sf::Sprite background;
 	

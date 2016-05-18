@@ -41,6 +41,11 @@ Game::Game()
 	{
 		// error...
 	}
+
+	if (!p.loadFromFile("textures/fireBall.gif"))
+	{
+		// error...
+	}
 	
 	scope.setTexture(s);
 	scope.setOrigin(scope.getLocalBounds().width / 2, scope.getLocalBounds().height / 2);
@@ -85,7 +90,7 @@ void Game::run()
 					sf::Vector2f d = { sf::Mouse::getPosition().x - (width / 2.0f) , sf::Mouse::getPosition().y - (height / 2.0f)};
 					d = normalize(d);
 					C->send(Protocol::fireWeapon(d.x,d.y));
-					Projectile projectile(P->getPosition(), d, (width*PLAYERSIZE)/2 );
+					Projectile projectile(P->getPosition(), d, (width*PLAYERSIZE)/5);
 					projectiles.push_back(projectile);
 				}
 			}

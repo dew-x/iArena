@@ -6,9 +6,10 @@ Projectile::Projectile() {
 
 Projectile::Projectile(sf::Vector2f p, sf::Vector2f dir, float size){
 	position = p;
-	velocity = dir * (SPEED * 4);
+	velocity = dir * (SPEED * 10);
 	direction = dir;
 	loadSprite(size);
+	
 }
 
 
@@ -20,7 +21,7 @@ void Projectile::draw(sf::RenderTarget & target, sf::RenderStates states) const{
 }
 
 void Projectile::loadSprite(float size) {
-	if (!t.loadFromFile("textures/fireBall.gif")) {
+	if (!t.loadFromFile("textures/fireBall2.png")) {
 		//error
 	}
 
