@@ -27,7 +27,6 @@ private:
 	sf::Vector2f acceleration;
 	sf::Vector2f velocity;
 	sf::Vector2f V0;
-	sf::Vector2f VF;
 	
 
 	//sprite of player
