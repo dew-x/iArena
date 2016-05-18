@@ -8,6 +8,7 @@
 #include "const.h"
 #include "Entity.h"
 #include "functions.h"
+#include <math.h>
 using namespace std;
 
 struct User : public Entity {

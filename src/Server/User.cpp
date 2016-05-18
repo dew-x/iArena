@@ -3,7 +3,7 @@
 Message User::message(const Message & m, map<int, Entity*> entities)
 {
 	Message res;
-	sf::Vector2f ndir = { 0.0f,0.0f };
+	sf::Vector2f ndir = { 0.0f,0.0f }, sdir, edir;
 	vector<hitData> collisions;
 	res.t = Message::NONE;
 	float dist;
@@ -29,10 +29,13 @@ Message User::message(const Message & m, map<int, Entity*> entities)
 		break;
 	case Message::FIRE_WEAPON:
 		cout << "WEAPON FIRED BY: " << uid << endl;
+		sdir = { m.As.wFire.x, m.As.wFire.y };
 		for (map<int, Entity*>::iterator it = entities.begin(); it != entities.end(); ++it) {
 			if (it->first != uid) {
-				dist = distanceLineToPoint(position, { m.As.wFire.x, m.As.wFire.y }, it->second->position);
-				cout << "CDIST: " << dist << endl;
+				dist = distanceLineToPoint(position, sdir , it->second->position);
+				sf::Vector2f edir = it->second->position - position;
+				float angle = acos(cross(sdir, edir) / (magnitude(sdir)*magnitude(edir)));
+				cout << "CDIST: " << dist <<" ANGLE: " << angle << endl;
 			}
 		}
 		res = Protocol::fireResult(collisions);
