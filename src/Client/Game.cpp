@@ -42,6 +42,10 @@ Game::Game()
 		// error...
 	}
 
+	if (!p.loadFromFile("textures/fireBall2.gif"))
+	{
+		// error...
+	}
 	
 	scope.setTexture(s);
 	scope.setOrigin(scope.getLocalBounds().width / 2, scope.getLocalBounds().height / 2);
@@ -90,7 +94,7 @@ void Game::run()
 						Projectile projectile;
 						projectileID++;
 						projectiles.push_back(projectile);
-						projectiles[projectiles.size() - 1].init(P->getPosition(), d, (width*PLAYERSIZE) / 5, projectileID);
+						projectiles[projectiles.size() - 1].init(P->getPosition(), d, (width*PLAYERSIZE) / 5, projectileID, p);
 					}
 				}
 			}

@@ -3,12 +3,13 @@
 Projectile::Projectile() {
 }
 
-void Projectile::init(sf::Vector2f p, sf::Vector2f dir, float size, int id){
+void Projectile::init(sf::Vector2f p, sf::Vector2f dir, float size, int id, sf::Texture &tex){
 	position = p;
 	velocity = dir * (SPEED * 10);
 	direction = dir;
 	loadSprite(size);
 	this->id = id;
+	t = tex;
 }
 
 
