@@ -43,6 +43,7 @@ struct Message {
 		} nKeys;
 		struct {
 			float x, y;
+			int id;
 		} wFire;
 		struct {
 			int size;
@@ -65,7 +66,7 @@ public:
 	static Message Login(unsigned uid, float x, float y);
 	static Message uKeys(bool w, bool a, bool s, bool d);
 	static Message nKeys(unsigned rid);
-	static Message fireWeapon(float x, float y);
+	static Message fireWeapon(float x, float y, int id);
 	static Message fireResult(std::vector<hitData> collisions);
 };
 

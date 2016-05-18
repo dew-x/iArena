@@ -44,11 +44,12 @@ Message Protocol::nKeys(unsigned rid)
 	return m;
 }
 
-Message Protocol::fireWeapon(float x, float y)
+Message Protocol::fireWeapon(float x, float y, int id)
 {
 	Message m= make(Message::FIRE_WEAPON);
 	m.As.wFire.x = x;
 	m.As.wFire.y = y;
+	m.As.wFire.id = id;
 	return m;
 }
 

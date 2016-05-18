@@ -25,7 +25,7 @@ Game::Game()
 	orders = vector<Message>(0);
 	projectiles = vector<Projectile>(0);
 	deltaClock = sf::Clock();
-
+	projectileID = 0;
 
 	//load images
 	if (!b.loadFromFile("textures/grass.jpg"))
@@ -85,8 +85,9 @@ void Game::run()
 				{
 					sf::Vector2f d = { sf::Mouse::getPosition().x - (width / 2.0f) , sf::Mouse::getPosition().y - (height / 2.0f)};
 					d = normalize(d);
-					C->send(Protocol::fireWeapon(d.x,d.y));
-					Projectile projectile(P->getPosition(), d, (width*PLAYERSIZE)/5);
+					C->send(Protocol::fireWeapon(d.x,d.y, projectileID));
+					Projectile projectile(P->getPosition(), d, (width*PLAYERSIZE)/5, projectileID);
+					projectileID++;
 					projectiles.push_back(projectile);
 				}
 			}

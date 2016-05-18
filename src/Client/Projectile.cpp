@@ -3,16 +3,22 @@
 Projectile::Projectile() {
 }
 
-Projectile::Projectile(sf::Vector2f p, sf::Vector2f dir, float size){
+Projectile::Projectile(sf::Vector2f p, sf::Vector2f dir, float size, int id){
 	position = p;
 	velocity = dir * (SPEED * 10);
 	direction = dir;
 	loadSprite(size);
+	this->id = id;
 	
 }
 
 Projectile::Projectile(const Projectile & projectile){
-
+	position = projectile.position;
+	velocity = projectile.velocity;
+	direction = projectile.direction;
+	t = projectile.t;
+	ps = projectile.ps;
+	id = projectile.id;
 }
 
 

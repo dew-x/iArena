@@ -48,6 +48,7 @@ private:
 
 	vector<Message> orders;
 	vector<Projectile> projectiles;
+	int projectileID;
 
 	//sprites
 	sf::Texture b;
