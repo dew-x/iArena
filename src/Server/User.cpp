@@ -32,10 +32,14 @@ Message User::message(const Message & m, map<int, Entity*> entities)
 		sdir = { m.As.wFire.x, m.As.wFire.y };
 		for (map<int, Entity*>::iterator it = entities.begin(); it != entities.end(); ++it) {
 			if (it->first != uid) {
-				dist = distanceLineToPoint(position, sdir , it->second->position);
-				sf::Vector2f edir = it->second->position - position;
-				float angle = acos(cross(sdir, edir) / (magnitude(sdir)*magnitude(edir)));
-				cout << "CDIST: " << dist <<" ANGLE: " << angle << endl;
+				dist = distanceLineToPoint(position, position+sdir , it->second->position);
+				if (dist < RADIUS) {
+					sf::Vector2f edir = it->second->position - position;
+					float cos = cross(sdir, edir) / (magnitude(sdir)*magnitude(edir));
+					if (cos >= 0.0f) {
+						cout << "CDIST: " << dist << " COS: " << cos << endl;
+					}
+				}
 			}
 		}
 		res = Protocol::fireResult(collisions);
