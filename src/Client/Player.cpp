@@ -115,32 +115,16 @@ sf::Vector2f Player::getPosition()
 
 
 void Player::rectificateA(float dt , sf::Vector2f dir) {
-	sf::Vector2f vf = dir * SPEED;
-	if (sgn(acceleration.x) == sgn(dir.x) && (velocity.x - vf.x) != 0.0f) {
+	sf::Vector2f vf = { SPEED*fabs(dir.x),SPEED*fabs(dir.y) };
+	if (dir.x == direction.x && (velocity.x - vf.x) != 0.0f) {
 		float distance1 = (V0.x*dt) + ((acceleration.x*dt*dt)*0.5f);
 		float deltaT = -((2 * distance1) / (velocity.x - vf.x));
 		acceleration.x = (vf.x - velocity.x) / deltaT;
-
-		// segon metode
-		/*float distance1 = (V0.x*dt) + ((acceleration.x*dt*dt)*0.5f);
-		acceleration.x = ((VF.x-V0.x)*(VF.x-V0.x)*1.5f) / distance1;*/
-
-		//tercer metode
-		/*float distance1 = (V0.x*dt) + ((acceleration.x*dt*dt)*0.5f);
-		acceleration.x = (deltaV.x * (vf.x - V0.x + (deltaV.x / 2))) / distance1;*/
 	}
-	if (sgn(acceleration.y) == sgn(dir.y) && (velocity.y - vf.y) != 0.0f){
+	if (dir.y == direction.y && (velocity.y - vf.y) != 0.0f) {
 		float distance1 = (V0.y*dt) + ((acceleration.y*dt*dt)*0.5f);
 		float deltaT = -((2 * distance1) / (velocity.y - vf.y));
 		acceleration.y = (vf.y - velocity.y) / deltaT;
-
-		//segon metode
-		/*float distance1 = (V0.y*dt) + ((acceleration.y*dt*dt)*0.5f);
-		acceleration.y = ((VF.y - V0.y)*(VF.y - V0.y)*1.5f) / distance1;*/
-
-		//tercer metode
-	/*	float distance1 = (V0.y*dt) + ((acceleration.y*dt*dt)*0.5f);
-		acceleration.y = (deltaV.y * (vf.y - V0.y + (deltaV.y/2))) / distance1;*/
 	}
 	std::cout << "P " << position.x << " " << position.y << std::endl;
 	std::cout << "V " << velocity.x << " " << velocity.y << std::endl;
