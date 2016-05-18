@@ -4,7 +4,9 @@ Message User::message(const Message & m, map<int, Entity*> entities)
 {
 	Message res;
 	sf::Vector2f ndir = { 0.0f,0.0f };
+	vector<hitData> collisions;
 	res.t = Message::NONE;
+	float dist;
 	switch (m.t)
 	{
 	case Message::NONE:
@@ -26,6 +28,14 @@ Message User::message(const Message & m, map<int, Entity*> entities)
 	case Message::NOTIFY_KEYS:
 		break;
 	case Message::FIRE_WEAPON:
+		cout << "WEAPON FIRED BY: " << uid << endl;
+		for (map<int, Entity*>::iterator it = entities.begin(); it != entities.end(); ++it) {
+			if (it->first != uid) {
+				dist = distanceLineToPoint(position, { m.As.wFire.x, m.As.wFire.y }, it->second->position);
+				cout << "CDIST: " << dist << endl;
+			}
+		}
+		res = Protocol::fireResult(collisions);
 		break;
 	case Message::FIRE_RESULT:
 		break;

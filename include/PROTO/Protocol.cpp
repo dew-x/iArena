@@ -52,7 +52,7 @@ Message Protocol::fireWeapon(float x, float y)
 	return m;
 }
 
-Message Protocol::fireResult()
+Message Protocol::fireResult(std::vector<hitData> collisions)
 {
 	return make(Message::FIRE_RESULT);
 }

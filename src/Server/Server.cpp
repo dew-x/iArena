@@ -46,6 +46,7 @@ void Server::run()
 					users[UUID] = newUser;
 					entities[cuid] = &users[UUID];
 					++cuid;
+					cout << "Current users: " << cuid << endl;
 				}
 				if (users.count(UUID)>0) {
 					User *u = &users[UUID];

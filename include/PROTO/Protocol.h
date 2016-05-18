@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML\System.hpp>
+#include <vector>
 #include <iostream>
 
 struct hitData {
@@ -65,6 +66,6 @@ public:
 	static Message uKeys(bool w, bool a, bool s, bool d);
 	static Message nKeys(unsigned rid);
 	static Message fireWeapon(float x, float y);
-	static Message fireResult();
+	static Message fireResult(std::vector<hitData> collisions);
 };
 
