@@ -9,6 +9,7 @@ class Projectile : public sf::Drawable
 public:
 	Projectile();
 	Projectile(sf::Vector2f position, sf::Vector2f dir, float size);
+	Projectile(const Projectile &projectile);
 	~Projectile();
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void loadSprite(float size);

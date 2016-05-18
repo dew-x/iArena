@@ -18,6 +18,10 @@ inline float RadToDeg(float Rad)
 	return Rad / M_PI * 180.f;
 }
 
+inline float magnitude(sf::Vector2f a) {
+	return sqrt((a.x*a.x) + (a.y*a.y));	
+}
+
 template <typename T> int sgn(T val) {
 	return (T(0) < val) - (val < T(0));
 }

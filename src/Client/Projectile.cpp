@@ -1,7 +1,6 @@
 #include "projectile.h"
 
 Projectile::Projectile() {
-
 }
 
 Projectile::Projectile(sf::Vector2f p, sf::Vector2f dir, float size){
@@ -10,6 +9,10 @@ Projectile::Projectile(sf::Vector2f p, sf::Vector2f dir, float size){
 	direction = dir;
 	loadSprite(size);
 	
+}
+
+Projectile::Projectile(const Projectile & projectile){
+
 }
 
 
