@@ -46,6 +46,7 @@ struct Message {
 			int id;
 		} wFire;
 		struct {
+			int pid;
 			int size;
 			hitData hits[10];
 		} rFire;

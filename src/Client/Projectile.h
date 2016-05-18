@@ -8,14 +8,14 @@ class Projectile : public sf::Drawable
 {	
 public:
 	Projectile();
-	Projectile(sf::Vector2f position, sf::Vector2f dir, float size, int id);
-	Projectile(const Projectile &projectile);
+	void init(sf::Vector2f position, sf::Vector2f dir, float size, int id);
 	~Projectile();
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	void loadSprite(float size);
+	
 	void updatePos(float dt);
 
 private:
+	void loadSprite(float size);
 	sf::Vector2f position;
 	sf::Vector2f direction;
 	sf::Vector2f velocity;

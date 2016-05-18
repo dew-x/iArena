@@ -81,14 +81,17 @@ void Game::run()
 
 			//mouse event
 			else if (event.type == sf::Event::MouseButtonPressed){
-				if (event.mouseButton.button == sf::Mouse::Left)
-				{
-					sf::Vector2f d = { sf::Mouse::getPosition().x - (width / 2.0f) , sf::Mouse::getPosition().y - (height / 2.0f)};
-					d = normalize(d);
-					C->send(Protocol::fireWeapon(d.x,d.y, projectileID));
-					Projectile projectile(P->getPosition(), d, (width*PLAYERSIZE)/5, projectileID);
-					projectileID++;
-					projectiles.push_back(projectile);
+				if (scene == SCENE_GAME) {
+					if (event.mouseButton.button == sf::Mouse::Left)
+					{
+						sf::Vector2f d = { sf::Mouse::getPosition().x - (width / 2.0f) , sf::Mouse::getPosition().y - (height / 2.0f) };
+						d = normalize(d);
+						C->send(Protocol::fireWeapon(d.x, d.y, projectileID));
+						Projectile projectile;
+						projectileID++;
+						projectiles.push_back(projectile);
+						projectiles[projectiles.size() - 1].init(P->getPosition(), d, (width*PLAYERSIZE) / 5, projectileID);
+					}
 				}
 			}
 			
