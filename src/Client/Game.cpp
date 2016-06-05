@@ -4,9 +4,12 @@
 
 Game::Game()
 {
-	width = sf::VideoMode::getDesktopMode().width;
+	width = 800;
+	height = 600;
+	/*width = sf::VideoMode::getDesktopMode().width;
 	height = sf::VideoMode::getDesktopMode().height;
-	app.create(sf::VideoMode::getDesktopMode(), "GAME", sf::Style::Fullscreen);
+	app.create(sf::VideoMode::getDesktopMode(), "GAME", sf::Style::Fullscreen);*/
+	app.create(sf::VideoMode(width, height), "GAME", sf::Style::Default);
 	app.setVerticalSyncEnabled(true);
 	app.setKeyRepeatEnabled(false);
 	scene = SCENE_LOGIN;
@@ -95,7 +98,8 @@ void Game::run()
 				if (scene == SCENE_GAME) {
 					if (event.mouseButton.button == sf::Mouse::Left)
 					{
-						sf::Vector2f d = { sf::Mouse::getPosition().x - (width / 2.0f) , sf::Mouse::getPosition().y - (height / 2.0f) };
+						//sf::Vector2f d = { sf::Mouse::getPosition().x - (width / 2.0f) , sf::Mouse::getPosition().y - (height / 2.0f) };
+						sf::Vector2f d = { event.mouseButton.x - (width / 2.0f) , event.mouseButton.y - (height / 2.0f) };
 						d = normalize(d);
 						C->send(Protocol::fireWeapon(d.x, d.y, projectileID));
 						Projectile projectile;
@@ -217,7 +221,8 @@ void Game::doGame(sf::Time dt)
 
 void Game::updateGame(sf::Time dt) {
 	P->updatePos((float)dt.asMilliseconds());
-	float radians = atan2(sf::Mouse::getPosition().y - height / 2.0f, sf::Mouse::getPosition().x - width / 2.0f);
+	float radians = atan2(sf::Mouse::getPosition(app).y - height / 2.0f, sf::Mouse::getPosition(app).x - width / 2.0f);
+	//float radians = atan2(sf::Mouse::getPosition().y - height / 2.0f, sf::Mouse::getPosition().x - width / 2.0f);
 	P->setRotation(RadToDeg(radians));
 
 	for (unsigned i = 0; i < projectiles.size(); i++) {
@@ -228,7 +233,8 @@ void Game::updateGame(sf::Time dt) {
 		enemies[i]->update((float)dt.asMilliseconds());
 	}
 
-	scope.setPosition((float)sf::Mouse::getPosition().x,(float) sf::Mouse::getPosition().y);
+	scope.setPosition((float)sf::Mouse::getPosition(app).x,(float) sf::Mouse::getPosition(app).y);
+	//scope.setPosition((float)sf::Mouse::getPosition().x, (float)sf::Mouse::getPosition().y);
 	while (!C->empty()) {
 		Message m = C->poll();
 		Enemy *e;
