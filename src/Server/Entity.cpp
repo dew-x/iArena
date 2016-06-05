@@ -28,3 +28,10 @@ entityData Entity::getData()
 	strcpy_s(d.name, 12, getName().c_str());
 	return d;
 }
+
+void Entity::restart()
+{
+	position = { 1000.0f, 1000.0f };
+	dir = { 0.0f,0.0f };
+	hp = 100;
+}

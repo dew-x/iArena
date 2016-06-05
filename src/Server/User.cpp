@@ -44,6 +44,7 @@ Message User::message(const Message & m, map<int, Entity*> entities, Message &br
 					float cos = cross(sdir, edir) / (magnitude(sdir)*magnitude(edir));
 					if (cos >= 0.0f) {
 						it->second->hp -= 10;
+						if (it->second->hp <= 0) it->second->restart();
 						collisions.push_back({it->first,10,(char)(it->second->hp>0),it->second->hp,0});
 					}
 				}

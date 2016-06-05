@@ -14,5 +14,6 @@ struct Entity
 	bool isUser();
 	entityData getData();
 	virtual std::string getName() = 0;
+	void restart();
 };
 

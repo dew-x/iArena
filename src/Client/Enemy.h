@@ -21,7 +21,12 @@ public:
 	int getID() { return id; };
 	void updateState(const entityData &state);
 	sf::Vector2f getPosition();
-	void dealDamage(unsigned dmg) { hp -= dmg; };
+	void dealDamage(unsigned dmg) { hp -= dmg; if (hp <= 0) restart();};
+	void restart() {
+		position = { 1000.0f, 1000.0f };
+		direction = { 0.0f,0.0f };
+		hp = 100;
+	};
 private:
 	sf::Vector2f position;
 	sf::Vector2f direction;

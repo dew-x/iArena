@@ -19,7 +19,15 @@ public:
 	sf::Vector2f getPosition();
 	void rectificateA(float dt, sf::Vector2f dir);
 	int getUID() { return uid; };
-	void dealDamage(unsigned damage) { hp -= damage; };
+	void dealDamage(unsigned damage) { hp -= damage; if (hp <= 0) restart(); };
+	void restart() {
+		position = { 1000.0f, 1000.0f };
+		direction = { 0.0f, 0.0f };
+		acceleration = { 0.0f,0.0f };
+		velocity = { 0.0f,0.0f };
+		V0 = { 0.0f,0.0f };
+		hp = 100;
+	};
 private:
 	sf::Vector2f direction;
 	sf::Vector2f position;
