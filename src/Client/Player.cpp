@@ -2,7 +2,7 @@
 
 
 
-Player::Player(unsigned uid, float x, float y , float size)
+Player::Player(unsigned uid, float x, float y , float size, std::string nick, const sf::Font &f)
 {
 	direction = { 0.0f, 0.0f };
 	position.x = x;
@@ -11,6 +11,10 @@ Player::Player(unsigned uid, float x, float y , float size)
 	acceleration = { 0.0f,0.0f };
 	velocity = { 0.0f,0.0f };
 	V0 = { 0.0f,0.0f };
+	nameText = sf::Text(nick, f, (unsigned)(size / 8.0f));
+	nameText.setOrigin({ nameText.getLocalBounds().width / 2.0f,nameText.getLocalBounds().height / 2.0f + size/2.0f });
+	nameText.setColor(sf::Color::Red);
+	nameText.setPosition(position);
 }
 
 
@@ -23,6 +27,7 @@ void Player::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	sf::View view = target.getView();
 	
 	target.draw(ps);
+	target.draw(nameText);
 }
 
 void Player::setDirection(sf::Vector2f dir){
@@ -86,6 +91,7 @@ void Player::updatePos(float dt) {
 	position += dot(direction,velocity*dt);
 	
 	ps.setPosition(position);
+	nameText.setPosition(position);
 }
 
 void Player::loadSprite(float size){

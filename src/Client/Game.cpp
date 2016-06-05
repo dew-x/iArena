@@ -196,10 +196,10 @@ void Game::drawLoading()
 		while (!C->empty()) {
 			Message m = C->poll();
 			if (m.t == Message::LOGIN) {
-				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y, width*PLAYERSIZE);
+				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y, width*PLAYERSIZE,nick,font);
 				M = new Map();
 				for (int i = 0; i < m.As.Login.entityCount; ++i) {
-					Enemy * e = new Enemy(m.As.Login.entities[i].id, m.As.Login.entities[i].x, m.As.Login.entities[i].y, m.As.Login.entities[i].name, texEnemy, width*PLAYERSIZE);
+					Enemy * e = new Enemy(m.As.Login.entities[i].id, m.As.Login.entities[i].x, m.As.Login.entities[i].y, m.As.Login.entities[i].name, texEnemy, width*PLAYERSIZE,font);
 					e->setEncodedDirection(m.As.Login.entities[i].direction);
 					enemies.push_back(e);
 				}
@@ -269,7 +269,7 @@ void Game::updateGame(sf::Time dt) {
 		case Message::FIRE_RESULT:
 			break;
 		case Message::SPAWN:
-			e=new Enemy(m.As.spawn.id, m.As.spawn.x, m.As.spawn.y, m.As.spawn.name, texEnemy, width*PLAYERSIZE);
+			e=new Enemy(m.As.spawn.id, m.As.spawn.x, m.As.spawn.y, m.As.spawn.name, texEnemy, width*PLAYERSIZE,font);
 			enemies.push_back(e);
 			break;
 		case Message::UPDATE_STATE:

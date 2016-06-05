@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(int id, float x, float y, const char name[12],sf::Texture &tex,float size)
+Enemy::Enemy(int id, float x, float y, const char name[12],sf::Texture &tex,float size, const sf::Font &font)
 {
 	this->id = id;
 	position = { x,y };
@@ -11,6 +11,10 @@ Enemy::Enemy(int id, float x, float y, const char name[12],sf::Texture &tex,floa
 	s.setOrigin(s.getLocalBounds().width / 2, s.getLocalBounds().height / 2);
 	s.setScale(size / s.getLocalBounds().width, size / s.getLocalBounds().width);
 	s.setPosition(position);
+	nameText = sf::Text(this->name, font, (unsigned)(size / 8.0f));
+	nameText.setOrigin({ nameText.getLocalBounds().width / 2.0f,nameText.getLocalBounds().height / 2.0f + size / 2.0f });
+	nameText.setColor(sf::Color::Red);
+	nameText.setPosition(position);
 }
 
 Enemy::~Enemy()
@@ -20,6 +24,7 @@ Enemy::~Enemy()
 void Enemy::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	target.draw(s);
+	target.draw(nameText);
 }
 
 void Enemy::setEncodedDirection(char encoded)
@@ -35,6 +40,7 @@ void Enemy::setEncodedDirection(char encoded)
 void Enemy::update(float delta) {
 	position += normalize(direction)*SPEED*delta;
 	s.setPosition(position);
+	nameText.setPosition(position);
 }
 
 void Enemy::updateState(const entityData &state)
