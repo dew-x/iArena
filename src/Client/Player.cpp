@@ -56,9 +56,9 @@ void Player::setAcceleration(sf::Vector2f dir){
 	int ox = sgn(direction.x);
 	int oy = sgn(direction.y);
 	//print print information
-	std::cout << "P0 " << position.x << " " << position.y << std::endl;
-	std::cout << "V0 " << velocity.x << " " << velocity.y << std::endl;
-	std::cout << "A0 " << acceleration.x << " " << acceleration.y << std::endl;
+	//std::cout << "P0 " << position.x << " " << position.y << std::endl;
+	//std::cout << "V0 " << velocity.x << " " << velocity.y << std::endl;
+	//std::cout << "A0 " << acceleration.x << " " << acceleration.y << std::endl;
 
 	//if signs of direction and acceleration are diferents, update acceleration with new sign
 	if (nx != ox) {
@@ -71,9 +71,9 @@ void Player::setAcceleration(sf::Vector2f dir){
 		V0.y = velocity.y;
 	}
 
-	std::cout << "P1 " << position.x << " " << position.y << std::endl;
-	std::cout << "V1 " << velocity.x << " " << velocity.y << std::endl;
-	std::cout << "A1 " << acceleration.x << " " << acceleration.y << std::endl;
+	//std::cout << "P1 " << position.x << " " << position.y << std::endl;
+	//std::cout << "V1 " << velocity.x << " " << velocity.y << std::endl;
+	//std::cout << "A1 " << acceleration.x << " " << acceleration.y << std::endl;
 
 	direction = dir;
 	direction = normalize(direction);
@@ -140,9 +140,9 @@ void Player::rectificateA(float dt , sf::Vector2f dir) {
 		float deltaT = -((2 * distance1) / (velocity.y - vf.y));
 		acceleration.y = (vf.y - velocity.y) / deltaT;
 	}
-	std::cout << "P " << position.x << " " << position.y << std::endl;
-	std::cout << "V " << velocity.x << " " << velocity.y << std::endl;
-	std::cout <<"A "<< acceleration.x << " " << acceleration.y << std::endl;
+	//std::cout << "P " << position.x << " " << position.y << std::endl;
+	//std::cout << "V " << velocity.x << " " << velocity.y << std::endl;
+	//std::cout <<"A "<< acceleration.x << " " << acceleration.y << std::endl;
 }
 
 

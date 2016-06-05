@@ -114,6 +114,7 @@ Message Protocol::make(Message::Type type)
 	m.t = type;
 	m.ts = now();
 	m.uid = id++;
+	m.ack = -1;
 	return m;
 }
 

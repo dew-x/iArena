@@ -46,6 +46,7 @@ struct Message {
 	Message::Type t;
 	int ts;
 	unsigned uid;
+	int ack;
 	union
 	{
 		struct {
@@ -57,7 +58,7 @@ struct Message {
 			float y;
 			int entityCount;
 			short hp;
-			entityData entities[15];
+			entityData entities[14];
 		} Login;
 		struct {
 			unsigned w, a, s, d;
@@ -80,14 +81,6 @@ struct Message {
 			int size;
 			hitData hits[10];
 		} bFire;
-		struct {
-			int entityCount;
-			entityData entities[10];
-			int itemCount;
-			itemData items[5];
-			int bulletCount;
-			bulletData bullets[10];
-		} broadcast;
 		struct {
 			int id;
 			float x, y;

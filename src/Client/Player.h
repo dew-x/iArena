@@ -4,6 +4,16 @@
 #include "const.h"
 #include "functions.h"
 
+struct State {
+	unsigned pcount;
+	sf::Vector2f direction;
+	sf::Vector2f position;
+	sf::Vector2f acceleration;
+	sf::Vector2f velocity;
+	sf::Vector2f V0;
+};
+
+
 class Player : public sf::Drawable
 {
 
@@ -28,6 +38,17 @@ public:
 		V0 = { 0.0f,0.0f };
 		hp = 100;
 	};
+	sf::Vector2f getDirection() { return direction; }
+	sf::Vector2f getAcceleration() { return acceleration; }
+	sf::Vector2f getV0() { return V0; }
+	sf::Vector2f getVelocity() { return velocity; }
+	void setState(State s) {
+		position = s.position;
+		direction = s.direction;
+		acceleration = s.acceleration;
+		velocity = s.velocity;
+		V0 = s.V0;
+	}
 private:
 	sf::Vector2f direction;
 	sf::Vector2f position;

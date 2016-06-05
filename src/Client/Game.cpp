@@ -101,11 +101,13 @@ void Game::run()
 						//sf::Vector2f d = { sf::Mouse::getPosition().x - (width / 2.0f) , sf::Mouse::getPosition().y - (height / 2.0f) };
 						sf::Vector2f d = { event.mouseButton.x - (width / 2.0f) , event.mouseButton.y - (height / 2.0f) };
 						d = normalize(d);
-						C->send(Protocol::fireWeapon(d.x, d.y, projectileID));
+						Message m = Protocol::fireWeapon(d.x, d.y, projectileID);
+						C->send(m);
+						orders.push_back(m);
+						saveState();
 						Projectile projectile;
 						projectileID++;
 						projectiles.push_back(projectile);
-						cout << projectileID << endl;
 						projectiles[projectiles.size() - 1].init(P->getPosition(), d, (1920*PLAYERSIZE) / 5, projectileID, p);
 					}
 				}
@@ -171,7 +173,10 @@ void Game::commitNick()
 	scene = SCENE_LOADING;
 	C = new Comm(SERVERIP);
 	T = thread(&Comm::init, C);
-	if (!C->send(Protocol::rLogin(nick))) {
+	Message m = Protocol::rLogin(nick);
+	if (!C->send(m)) {
+		orders.push_back(m);
+		saveState();
 		app.close();
 	}
 }
@@ -237,6 +242,18 @@ void Game::updateGame(sf::Time dt) {
 	//scope.setPosition((float)sf::Mouse::getPosition().x, (float)sf::Mouse::getPosition().y);
 	while (!C->empty()) {
 		Message m = C->poll();
+		if (m.ack != -1 && (unsigned)m.ack<orders.size() && orders[m.ack].ts+1000<Protocol::now()) {
+			printf("DESYNC: ACK: %d ORDERS: %d LAST: %d NOW: %d", m.ack, orders.size(), orders[m.ack].ts, Protocol::now());
+			// rollback to ack
+			while (orders.size() > (unsigned)m.ack) {
+				orders.pop_back();
+			}
+			while ((unsigned)projectileID > states[m.ack].pcount) {
+				--projectileID;
+				projectiles.pop_back();
+			}
+			P->setState(states[m.ack]);
+		}
 		Enemy *e;
 		switch (m.t)
 		{
@@ -252,7 +269,6 @@ void Game::updateGame(sf::Time dt) {
 			for (unsigned i = 0; i < orders.size(); i++) {
 				if (orders[i].uid == m.As.nKeys.rid) {
 					int delta = Protocol::now()-orders[i].ts;
-					cout << delta << endl;
 					sf::Vector2f dir = { 0.0f,0.0f };
 					if (orders[i].As.uKeys.w) {
 						dir.y -= 1.0f;
@@ -282,7 +298,6 @@ void Game::updateGame(sf::Time dt) {
 			}
 			break;
 		case Message::FIRE_BROADCAST:
-			cout << "FB" << endl;
 			for (unsigned i = 0; i < enemies.size(); ++i) {
 				if (enemies[i]->getID() == m.As.bFire.uid) {
 					// make new projectyle
@@ -291,7 +306,6 @@ void Game::updateGame(sf::Time dt) {
 					projectiles.push_back(projectile);
 					projectiles[projectiles.size() - 1].init(enemies[i]->getPosition(), { m.As.bFire.x,m.As.bFire.y }, (1920 * PLAYERSIZE) / 5, projectileID, p);
 					for (unsigned j = 0; (int)j < m.As.bFire.size; ++j) {
-						cout << "DAMAGE " <<j<<" "<< m.As.bFire.size <<" "<< m.As.bFire.hits[j].damage << endl;
 						if (m.As.bFire.hits[j].uid == P->getUID()) {
 							P->dealDamage(m.As.bFire.hits[j].damage);
 						}
@@ -369,6 +383,7 @@ void Game::updateMovement() {
 	);
 	C->send(m);
 	orders.push_back(m);
+	saveState();
 	sf::Vector2f dir = { 0.0f,0.0f };
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		dir.y -= 1.0f;
@@ -383,4 +398,16 @@ void Game::updateMovement() {
 		dir.x += 1.0f;
 	}
 	P->setAcceleration(dir);
+}
+
+void Game::saveState()
+{
+	State s;
+	s.pcount = projectileID;
+	s.acceleration = P->getAcceleration();
+	s.direction = P->getDirection();
+	s.position = P->getPosition();
+	s.V0 = P->getV0();
+	s.velocity = P->getVelocity();
+	states.push_back(s);
 }

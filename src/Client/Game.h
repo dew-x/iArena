@@ -41,6 +41,7 @@ private:
 	void updateGame(sf::Time dt);
 	void drawGame();
 	void updateMovement();
+	void saveState();
 	Comm *C;
 	thread T;
 	Player *P;
@@ -49,6 +50,7 @@ private:
 	Map *M;
 
 	vector<Message> orders;
+	vector<State> states;
 	vector<Projectile> projectiles;
 	vector<Enemy*> enemies;
 	int projectileID;

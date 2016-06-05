@@ -45,6 +45,7 @@ void Server::run()
 					newUser.uid = cuid;
 					newUser.position = { 1000.0f,1000.0f };
 					newUser.hp = 100;
+					newUser.last = (int)got.uid-1;
 					users[UUID] = newUser;
 					entities[cuid] = &users[UUID];
 					++cuid;

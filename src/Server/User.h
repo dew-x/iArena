@@ -19,5 +19,6 @@ struct User : public Entity {
 	Message message(const Message &m, map<int, Entity*> entities, Message &broadcast);
 	std::vector<Message> keys;
 	virtual string getName();
+	int last;
 };
 
