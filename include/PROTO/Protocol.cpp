@@ -18,12 +18,13 @@ Message Protocol::rLogin(const char nick[12])
 	return m;
 }
 
-Message Protocol::Login(unsigned uid, float x, float y, const std::vector<entityData> &others)
+Message Protocol::Login(unsigned uid, float x, float y, const std::vector<entityData> &others, short hp)
 {
 	Message m = make(Message::LOGIN);
 	m.As.Login.uid = uid;
 	m.As.Login.x = x;
 	m.As.Login.y = y;
+	m.As.Login.hp = hp;
 	m.As.Login.entityCount = others.size();
 	for (unsigned i = 0; i < others.size(); ++i) {
 		m.As.Login.entities[i] = others[i];
@@ -59,15 +60,38 @@ Message Protocol::fireWeapon(float x, float y, int id)
 
 Message Protocol::fireResult(std::vector<hitData> collisions)
 {
-	return make(Message::FIRE_RESULT);
+	Message m = make(Message::FIRE_RESULT);
+	m.As.rFire.size = collisions.size();
+	for (unsigned i = 0; i < collisions.size(); ++i) {
+		m.As.rFire.hits[i] = collisions[i];
+	}
+	return m;
 }
 
-Message Protocol::spawn(float x, float y, int id, const char nick[12])
+Message Protocol::fireBroadcast(unsigned uid, sf::Vector2f dir, std::vector<hitData> collisions)
+{
+	Message m = make(Message::FIRE_BROADCAST);
+	m.As.bFire.uid = uid;
+	m.As.bFire.x = dir.x;
+	m.As.bFire.y = dir.y;
+	m.As.bFire.size = collisions.size();
+	for (unsigned i = 0; i < collisions.size(); ++i) {
+		m.As.bFire.hits[i].damage = collisions[i].damage;
+		m.As.bFire.hits[i].drop = collisions[i].drop;
+		m.As.bFire.hits[i].hpleft = collisions[i].hpleft;
+		m.As.bFire.hits[i].kill = collisions[i].kill;
+		m.As.bFire.hits[i].uid = collisions[i].uid;
+	}
+	return m;
+}
+
+Message Protocol::spawn(float x, float y, int id, const char nick[12], short hp)
 {
 	Message m = make(Message::SPAWN);
 	m.As.spawn.id = id;
 	m.As.spawn.x = x;
 	m.As.spawn.y = y;
+	m.As.spawn.hp = hp;
 	strcpy_s(m.As.spawn.name, 12, nick);
 	return m;
 }

@@ -2,7 +2,7 @@
 
 
 
-Player::Player(unsigned uid, float x, float y , float size, std::string nick, const sf::Font &f)
+Player::Player(unsigned uid, float x, float y , float size, std::string nick, const sf::Font &f, short hp)
 {
 	direction = { 0.0f, 0.0f };
 	position.x = x;
@@ -12,9 +12,17 @@ Player::Player(unsigned uid, float x, float y , float size, std::string nick, co
 	velocity = { 0.0f,0.0f };
 	V0 = { 0.0f,0.0f };
 	nameText = sf::Text(nick, f, (unsigned)(size / 4.0f));
-	nameText.setOrigin({ nameText.getLocalBounds().width / 2.0f,nameText.getLocalBounds().height / 2.0f + size/2.0f });
+	nameText.setOrigin({ nameText.getLocalBounds().width / 2.0f,nameText.getLocalBounds().height / 2.0f + size - size/5.0f });
 	nameText.setColor(sf::Color::Red);
 	nameText.setPosition(position);
+	this->uid = uid;
+	this->hp = hp;
+	hpbg = sf::RectangleShape({ size,size/5.0f });
+	hpbg.setFillColor(sf::Color::Black);
+	hpbg.setOrigin({ hpbg.getLocalBounds().width / 2.0f,hpbg.getLocalBounds().height / 2.0f + size*2.0f/3.0f - size / 5.0f });
+	hpfront = sf::RectangleShape({ size - 4,size / 5.0f - 4 });
+	hpfront.setFillColor(sf::Color::Red);
+	hpfront.setOrigin({ hpfront.getLocalBounds().width / 2.0f,hpfront.getLocalBounds().height / 2.0f + size*2.0f/3.0f - size / 5.0f });
 }
 
 
@@ -28,6 +36,8 @@ void Player::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	
 	target.draw(ps);
 	target.draw(nameText);
+	target.draw(hpbg);
+	target.draw(hpfront);
 }
 
 void Player::setDirection(sf::Vector2f dir){
@@ -92,6 +102,9 @@ void Player::updatePos(float dt) {
 	
 	ps.setPosition(position);
 	nameText.setPosition(position);
+	hpbg.setPosition(position);
+	hpfront.setPosition(position);
+	hpfront.setScale({ hp / 100.0f,1 });
 }
 
 void Player::loadSprite(float size){

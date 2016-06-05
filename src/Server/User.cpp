@@ -18,7 +18,7 @@ Message User::message(const Message & m, map<int, Entity*> entities, Message &br
 				others.push_back(it->second->getData());
 			}
 		}
-		res = Protocol::Login(uid, position.x, position.y, others);
+		res = Protocol::Login(uid, position.x, position.y, others, 100);
 		break;
 	case Message::LOGIN:
 		break;
@@ -35,7 +35,6 @@ Message User::message(const Message & m, map<int, Entity*> entities, Message &br
 	case Message::NOTIFY_KEYS:
 		break;
 	case Message::FIRE_WEAPON:
-		cout << "WEAPON FIRED BY: " << uid << endl;
 		sdir = { m.As.wFire.x, m.As.wFire.y };
 		for (map<int, Entity*>::iterator it = entities.begin(); it != entities.end(); ++it) {
 			if (it->first != uid) {
@@ -44,11 +43,13 @@ Message User::message(const Message & m, map<int, Entity*> entities, Message &br
 					sf::Vector2f edir = it->second->position - position;
 					float cos = cross(sdir, edir) / (magnitude(sdir)*magnitude(edir));
 					if (cos >= 0.0f) {
-						cout << "CDIST: " << dist << " COS: " << cos << endl;
+						it->second->hp -= 10;
+						collisions.push_back({it->first,10,(char)(it->second->hp>0),it->second->hp,0});
 					}
 				}
 			}
 		}
+		broadcast = Protocol::fireBroadcast(uid,sdir, collisions);
 		res = Protocol::fireResult(collisions);
 		break;
 	case Message::FIRE_RESULT:

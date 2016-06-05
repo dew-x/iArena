@@ -44,12 +44,13 @@ void Server::run()
 					newUser.ts = got.ts;
 					newUser.uid = cuid;
 					newUser.position = { 1000.0f,1000.0f };
+					newUser.hp = 100;
 					users[UUID] = newUser;
 					entities[cuid] = &users[UUID];
 					++cuid;
 					cout << "Current users: " << cuid << endl;
 					// broadcast login
-					broadcast(UUID,Protocol::spawn(1000.0f, 1000.0f, newUser.uid, got.As.rLogin.nick));
+					broadcast(UUID,Protocol::spawn(1000.0f, 1000.0f, newUser.uid, got.As.rLogin.nick, newUser.hp));
 				}
 				if (users.count(UUID)>0) {
 					User *u = &users[UUID];

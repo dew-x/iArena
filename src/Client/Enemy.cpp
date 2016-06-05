@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(int id, float x, float y, const char name[12],sf::Texture &tex,float size, const sf::Font &font)
+Enemy::Enemy(int id, float x, float y, const char name[12],sf::Texture &tex,float size, const sf::Font &font, short hp)
 {
 	this->id = id;
 	position = { x,y };
@@ -12,9 +12,16 @@ Enemy::Enemy(int id, float x, float y, const char name[12],sf::Texture &tex,floa
 	s.setScale(size / s.getLocalBounds().width, size / s.getLocalBounds().width);
 	s.setPosition(position);
 	nameText = sf::Text(this->name, font, (unsigned)(size / 4.0f));
-	nameText.setOrigin({ nameText.getLocalBounds().width / 2.0f,nameText.getLocalBounds().height / 2.0f + size / 2.0f });
+	nameText.setOrigin({ nameText.getLocalBounds().width / 2.0f,nameText.getLocalBounds().height / 2.0f + size - size / 5.0f });
 	nameText.setColor(sf::Color::Red);
 	nameText.setPosition(position);
+	this->hp = hp;
+	hpbg = sf::RectangleShape({ size,size / 5.0f });
+	hpbg.setFillColor(sf::Color::Black);
+	hpbg.setOrigin({ hpbg.getLocalBounds().width / 2.0f,hpbg.getLocalBounds().height / 2.0f + size*2.0f / 3.0f - size / 5.0f });
+	hpfront = sf::RectangleShape({ size - 4,size / 5.0f - 4 });
+	hpfront.setFillColor(sf::Color::Red);
+	hpfront.setOrigin({ hpfront.getLocalBounds().width / 2.0f,hpfront.getLocalBounds().height / 2.0f + size*2.0f / 3.0f - size / 5.0f });
 }
 
 Enemy::~Enemy()
@@ -25,6 +32,8 @@ void Enemy::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	target.draw(s);
 	target.draw(nameText);
+	target.draw(hpbg);
+	target.draw(hpfront);
 }
 
 void Enemy::setEncodedDirection(char encoded)
@@ -41,9 +50,17 @@ void Enemy::update(float delta) {
 	position += normalize(direction)*SPEED*delta;
 	s.setPosition(position);
 	nameText.setPosition(position);
+	hpbg.setPosition(position);
+	hpfront.setPosition(position);
+	hpfront.setScale({ hp / 100.0f,1 });
 }
 
 void Enemy::updateState(const entityData &state)
 {
 	setEncodedDirection(state.direction);
+}
+
+sf::Vector2f Enemy::getPosition()
+{
+	return position;
 }

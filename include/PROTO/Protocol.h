@@ -39,6 +39,7 @@ struct Message {
 		NOTIFY_KEYS,
 		FIRE_WEAPON,
 		FIRE_RESULT,
+		FIRE_BROADCAST,
 		UPDATE_STATE,
 		MAX
 	};
@@ -55,6 +56,7 @@ struct Message {
 			float x;
 			float y;
 			int entityCount;
+			short hp;
 			entityData entities[15];
 		} Login;
 		struct {
@@ -73,6 +75,12 @@ struct Message {
 			hitData hits[10];
 		} rFire;
 		struct {
+			int uid;
+			float x, y;
+			int size;
+			hitData hits[10];
+		} bFire;
+		struct {
 			int entityCount;
 			entityData entities[10];
 			int itemCount;
@@ -84,6 +92,7 @@ struct Message {
 			int id;
 			float x, y;
 			char name[12];
+			short hp;
 		} spawn;
 		struct {
 			entityData data;
@@ -101,12 +110,13 @@ public:
 	static const Message decode(const char *msg);
 	static const char* encode(const Message &m);
 	static Message rLogin(const char nick[12]);
-	static Message Login(unsigned uid, float x, float y, const std::vector<entityData> &others);
+	static Message Login(unsigned uid, float x, float y, const std::vector<entityData> &others, short hp);
 	static Message uKeys(bool w, bool a, bool s, bool d);
 	static Message nKeys(unsigned rid);
 	static Message fireWeapon(float x, float y, int id);
 	static Message fireResult(std::vector<hitData> collisions);
-	static Message spawn(float x, float y, int id, const char nick[12]);
+	static Message fireBroadcast(unsigned uid, sf::Vector2f dir, std::vector<hitData> collisions);
+	static Message spawn(float x, float y, int id, const char nick[12], short hp);
 	static Message updateState(const entityData &data);
 	static Message make(Message::Type type);
 };

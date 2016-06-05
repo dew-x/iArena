@@ -8,7 +8,7 @@ class Player : public sf::Drawable
 {
 
 public:
-	Player(unsigned uid, float x, float y, float size, std::string nick, const sf::Font &f);
+	Player(unsigned uid, float x, float y, float size, std::string nick, const sf::Font &f, short hp);
 	~Player();
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void setDirection(sf::Vector2f dir);
@@ -18,7 +18,8 @@ public:
 	void setRotation(float angle);
 	sf::Vector2f getPosition();
 	void rectificateA(float dt, sf::Vector2f dir);
-	
+	int getUID() { return uid; };
+	void dealDamage(unsigned damage) { hp -= damage; };
 private:
 	sf::Vector2f direction;
 	sf::Vector2f position;
@@ -29,5 +30,9 @@ private:
 	sf::Texture t;
 	sf::Sprite ps;
 	sf::Text nameText;
+	sf::RectangleShape hpbg;
+	sf::RectangleShape hpfront;
+	int uid;
+	int hp;
 };
 

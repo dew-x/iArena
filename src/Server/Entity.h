@@ -9,7 +9,7 @@ struct Entity
 	int uid;
 	sf::Vector2f position;
 	sf::Vector2f dir;
-	int hp;
+	short hp;
 	void update();
 	bool isUser();
 	entityData getData();

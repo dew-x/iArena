@@ -200,10 +200,10 @@ void Game::drawLoading()
 		while (!C->empty()) {
 			Message m = C->poll();
 			if (m.t == Message::LOGIN) {
-				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y, 1920*PLAYERSIZE,nick,font);
+				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y, 1920*PLAYERSIZE,nick,font,m.As.Login.hp);
 				M = new Map();
 				for (int i = 0; i < m.As.Login.entityCount; ++i) {
-					Enemy * e = new Enemy(m.As.Login.entities[i].id, m.As.Login.entities[i].x, m.As.Login.entities[i].y, m.As.Login.entities[i].name, texEnemy, 1920*PLAYERSIZE,font);
+					Enemy * e = new Enemy(m.As.Login.entities[i].id, m.As.Login.entities[i].x, m.As.Login.entities[i].y, m.As.Login.entities[i].name, texEnemy, 1920*PLAYERSIZE,font, m.As.Login.entities[i].hp);
 					e->setEncodedDirection(m.As.Login.entities[i].direction);
 					enemies.push_back(e);
 				}
@@ -273,9 +273,41 @@ void Game::updateGame(sf::Time dt) {
 		case Message::FIRE_WEAPON:
 			break;
 		case Message::FIRE_RESULT:
+			for (unsigned j = 0; (int)j < m.As.rFire.size; ++j) {
+				for (unsigned k = 0; k < enemies.size(); ++k) {
+					if (m.As.rFire.hits[j].uid == enemies[k]->getID()) {
+						enemies[k]->dealDamage(m.As.rFire.hits[j].damage);
+					}
+				}
+			}
+			break;
+		case Message::FIRE_BROADCAST:
+			cout << "FB" << endl;
+			for (unsigned i = 0; i < enemies.size(); ++i) {
+				if (enemies[i]->getID() == m.As.bFire.uid) {
+					// make new projectyle
+					Projectile projectile;
+					projectileID++;
+					projectiles.push_back(projectile);
+					projectiles[projectiles.size() - 1].init(enemies[i]->getPosition(), { m.As.bFire.x,m.As.bFire.y }, (1920 * PLAYERSIZE) / 5, projectileID, p);
+					for (unsigned j = 0; (int)j < m.As.bFire.size; ++j) {
+						cout << "DAMAGE " <<j<<" "<< m.As.bFire.size <<" "<< m.As.bFire.hits[j].damage << endl;
+						if (m.As.bFire.hits[j].uid == P->getUID()) {
+							P->dealDamage(m.As.bFire.hits[j].damage);
+						}
+						else {
+							for (unsigned k = 0; k < enemies.size(); ++k) {
+								if (m.As.bFire.hits[j].uid == enemies[k]->getID()) {
+									enemies[k]->dealDamage(m.As.bFire.hits[j].damage);
+								}
+							}
+						}
+					}
+				}
+			}
 			break;
 		case Message::SPAWN:
-			e=new Enemy(m.As.spawn.id, m.As.spawn.x, m.As.spawn.y, m.As.spawn.name, texEnemy, 1920.0f*PLAYERSIZE,font);
+			e=new Enemy(m.As.spawn.id, m.As.spawn.x, m.As.spawn.y, m.As.spawn.name, texEnemy, 1920.0f*PLAYERSIZE,font,m.As.spawn.hp);
 			enemies.push_back(e);
 			break;
 		case Message::UPDATE_STATE:
