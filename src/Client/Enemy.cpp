@@ -11,7 +11,7 @@ Enemy::Enemy(int id, float x, float y, const char name[12],sf::Texture &tex,floa
 	s.setOrigin(s.getLocalBounds().width / 2, s.getLocalBounds().height / 2);
 	s.setScale(size / s.getLocalBounds().width, size / s.getLocalBounds().width);
 	s.setPosition(position);
-	nameText = sf::Text(this->name, font, (unsigned)(size / 8.0f));
+	nameText = sf::Text(this->name, font, (unsigned)(size / 4.0f));
 	nameText.setOrigin({ nameText.getLocalBounds().width / 2.0f,nameText.getLocalBounds().height / 2.0f + size / 2.0f });
 	nameText.setColor(sf::Color::Red);
 	nameText.setPosition(position);

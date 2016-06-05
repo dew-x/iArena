@@ -11,7 +11,7 @@ Player::Player(unsigned uid, float x, float y , float size, std::string nick, co
 	acceleration = { 0.0f,0.0f };
 	velocity = { 0.0f,0.0f };
 	V0 = { 0.0f,0.0f };
-	nameText = sf::Text(nick, f, (unsigned)(size / 8.0f));
+	nameText = sf::Text(nick, f, (unsigned)(size / 4.0f));
 	nameText.setOrigin({ nameText.getLocalBounds().width / 2.0f,nameText.getLocalBounds().height / 2.0f + size/2.0f });
 	nameText.setColor(sf::Color::Red);
 	nameText.setPosition(position);

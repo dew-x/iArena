@@ -106,7 +106,7 @@ void Game::run()
 						projectileID++;
 						projectiles.push_back(projectile);
 						cout << projectileID << endl;
-						projectiles[projectiles.size() - 1].init(P->getPosition(), d, (width*PLAYERSIZE) / 5, projectileID, p);
+						projectiles[projectiles.size() - 1].init(P->getPosition(), d, (1920*PLAYERSIZE) / 5, projectileID, p);
 					}
 				}
 			}
@@ -200,10 +200,10 @@ void Game::drawLoading()
 		while (!C->empty()) {
 			Message m = C->poll();
 			if (m.t == Message::LOGIN) {
-				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y, width*PLAYERSIZE,nick,font);
+				P = new Player(m.As.Login.uid, m.As.Login.x, m.As.Login.y, 1920*PLAYERSIZE,nick,font);
 				M = new Map();
 				for (int i = 0; i < m.As.Login.entityCount; ++i) {
-					Enemy * e = new Enemy(m.As.Login.entities[i].id, m.As.Login.entities[i].x, m.As.Login.entities[i].y, m.As.Login.entities[i].name, texEnemy, width*PLAYERSIZE,font);
+					Enemy * e = new Enemy(m.As.Login.entities[i].id, m.As.Login.entities[i].x, m.As.Login.entities[i].y, m.As.Login.entities[i].name, texEnemy, 1920*PLAYERSIZE,font);
 					e->setEncodedDirection(m.As.Login.entities[i].direction);
 					enemies.push_back(e);
 				}
@@ -275,7 +275,7 @@ void Game::updateGame(sf::Time dt) {
 		case Message::FIRE_RESULT:
 			break;
 		case Message::SPAWN:
-			e=new Enemy(m.As.spawn.id, m.As.spawn.x, m.As.spawn.y, m.As.spawn.name, texEnemy, width*PLAYERSIZE,font);
+			e=new Enemy(m.As.spawn.id, m.As.spawn.x, m.As.spawn.y, m.As.spawn.name, texEnemy, 1920.0f*PLAYERSIZE,font);
 			enemies.push_back(e);
 			break;
 		case Message::UPDATE_STATE:
@@ -306,6 +306,7 @@ void Game::drawGame() {
 	sf::Vector2f Ppos = P->getPosition();
 	view.setCenter(width / 2.0f, height / 2.0f);
 	view.move({ -width / 2.0f + Ppos.x, -height / 2.0f + Ppos.y });
+	view.zoom(1920.0f/width);
 	app.setView(view);
 	app.draw(*M);
 	app.draw(*P);
