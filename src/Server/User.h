@@ -11,12 +11,14 @@
 #include <math.h>
 using namespace std;
 
+ 
+
 struct User : public Entity {
 	sf::IpAddress ip;
 	unsigned short port;
 	int ts;
 	string nick;
-	Message message(const Message &m, map<int, Entity*> entities, Message &broadcast);
+	Message message(const Message &m, map<int, Entity*> entities, Message &broadcast, vector<Item> items);
 	std::vector<Message> keys;
 	virtual string getName();
 	int last;

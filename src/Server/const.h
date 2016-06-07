@@ -4,6 +4,7 @@ const unsigned BUFSIZE = 512;
 const float M_PI = 3.1415927410125732421875;
 const float SPEED = 0.3f;
 const float RADIUS = 50.0f;
+const int MAXITEMS = 12;
 
 inline float RadToDeg(float Rad)
 {

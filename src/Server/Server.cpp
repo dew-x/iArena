@@ -5,6 +5,7 @@
 Server::Server(unsigned port)
 {
 	this->port = port;
+	items = vector<Item>(0);
 }
 
 
@@ -50,13 +51,15 @@ void Server::run()
 					entities[cuid] = &users[UUID];
 					++cuid;
 					cout << "Current users: " << cuid << endl;
+					/*Message tobroadcast = Protocol::make(Message::NONE);
+					Message res = users[UUID].message(got, entities, tobroadcast);*/
 					// broadcast login
 					broadcast(UUID,Protocol::spawn(1000.0f, 1000.0f, newUser.uid, got.As.rLogin.nick, newUser.hp));
 				}
 				if (users.count(UUID)>0) {
 					User *u = &users[UUID];
 					Message tobroadcast=Protocol::make(Message::NONE);
-					Message res = u->message(got,entities, tobroadcast);
+					Message res = u->message(got,entities, tobroadcast,items);
 					if (tobroadcast.t!=Message::NONE) broadcast(UUID, tobroadcast);
 					if (res.t != Message::NONE) socket.send(Protocol::encode(res), sizeof(Message) , u->ip, u->port);
 				}
@@ -65,6 +68,10 @@ void Server::run()
 		int current = clock.getElapsedTime().asMilliseconds();
 		if (current != previous) {
 			int steps = current - previous;
+			if ((rand() % 10000) < steps && items.size() <= MAXITEMS) {
+				items.push_back({0,(float)(rand()%2000),(float)(rand() % 2000) });
+				broadcastAll(Protocol::spawnItem(items[items.size()-1].type, items[items.size() - 1].x, items[items.size() - 1].y));
+			}
 			for (int s = 0; s < steps; ++s) {
 				for (auto it = users.begin(); it != users.end(); ++it) {
 					it->second.update();
@@ -82,5 +89,12 @@ void Server::broadcast(string UUID, const Message &m)
 		if (it->first != UUID) {
 			socket.send(data, sizeof(Message), it->second.ip, it->second.port);
 		}
+	}
+}
+
+void Server::broadcastAll(const Message & m){
+	const char *data = Protocol::encode(m);
+	for (auto it = users.begin(); it != users.end(); ++it) {
+		socket.send(data, sizeof(Message), it->second.ip, it->second.port);
 	}
 }

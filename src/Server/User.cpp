@@ -1,6 +1,6 @@
 #include "User.h"
 
-Message User::message(const Message & m, map<int, Entity*> entities, Message &broadcast)
+Message User::message(const Message & m, map<int, Entity*> entities, Message &broadcast, vector<Item> items)
 {
 	bool valid = true;
 	if (m.uid == last + 1) ++last;
@@ -24,7 +24,7 @@ Message User::message(const Message & m, map<int, Entity*> entities, Message &br
 				others.push_back(it->second->getData());
 			}
 		}
-		res = Protocol::Login(uid, position.x, position.y, others, 100);
+		res = Protocol::Login(uid, position.x, position.y, others, 100, items);
 		break;
 	case Message::LOGIN:
 		break;

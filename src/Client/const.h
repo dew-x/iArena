@@ -10,6 +10,7 @@ const unsigned MSIZE = 200;
 const float SPEED = 0.3f;
 const float ACELERATION = 0.001f;
 const float PLAYERSIZE = 0.05f;
+const int MAXITEMS = 12;
 
 const float M_PI = 3.1415927410125732421875;
 

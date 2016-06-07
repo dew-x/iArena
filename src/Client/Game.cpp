@@ -212,6 +212,9 @@ void Game::drawLoading()
 					e->setEncodedDirection(m.As.Login.entities[i].direction);
 					enemies.push_back(e);
 				}
+				for (int i = 0; i < m.As.Login.itemCount; ++i) {
+					cout << m.As.Login.items[i].type << " " << m.As.Login.items[i].x << " " << m.As.Login.items[i].y << " thats all " << endl;
+				}
 				break;
 			}
 		}
@@ -323,6 +326,9 @@ void Game::updateGame(sf::Time dt) {
 		case Message::SPAWN:
 			e=new Enemy(m.As.spawn.id, m.As.spawn.x, m.As.spawn.y, m.As.spawn.name, texEnemy, 1920.0f*PLAYERSIZE,font,m.As.spawn.hp);
 			enemies.push_back(e);
+			break;
+		case Message::SPAWN_ITEM:
+			cout << m.As.sItem.type << " " << m.As.sItem.x << " " << m.As.sItem.y << "thats all" << endl;
 			break;
 		case Message::UPDATE_STATE:
 			for (unsigned i = 0; i < enemies.size(); ++i) {

@@ -18,7 +18,7 @@ Message Protocol::rLogin(const char nick[12])
 	return m;
 }
 
-Message Protocol::Login(unsigned uid, float x, float y, const std::vector<entityData> &others, short hp)
+Message Protocol::Login(unsigned uid, float x, float y, const std::vector<entityData> &others, short hp, std::vector<Item> items)
 {
 	Message m = make(Message::LOGIN);
 	m.As.Login.uid = uid;
@@ -28,6 +28,10 @@ Message Protocol::Login(unsigned uid, float x, float y, const std::vector<entity
 	m.As.Login.entityCount = others.size();
 	for (unsigned i = 0; i < others.size(); ++i) {
 		m.As.Login.entities[i] = others[i];
+	}
+	m.As.Login.itemCount = items.size();
+	for (unsigned i = 0; i < items.size(); ++i) {
+		m.As.Login.items[i] = items[i];
 	}
 	return m;
 }
@@ -93,6 +97,15 @@ Message Protocol::spawn(float x, float y, int id, const char nick[12], short hp)
 	m.As.spawn.y = y;
 	m.As.spawn.hp = hp;
 	strcpy_s(m.As.spawn.name, 12, nick);
+	return m;
+}
+
+Message Protocol::spawnItem(int type, float x, float y)
+{
+	Message m = make(Message::SPAWN_ITEM);
+	m.As.sItem.type = type;
+	m.As.sItem.x = x;
+	m.As.sItem.y = y;
 	return m;
 }
 
