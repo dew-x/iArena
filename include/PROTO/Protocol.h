@@ -33,6 +33,7 @@ struct bulletData {
 struct Message {
 	enum Type {
 		NONE,
+		CHAT,
 		BROADCAST,
 		REQUEST_LOGIN,
 		LOGIN,
@@ -100,6 +101,9 @@ struct Message {
 			float x;
 			float y;
 		} sItem;
+		struct {
+			char text[200];
+		} chat;
 	} As;
 };
 
@@ -122,6 +126,7 @@ public:
 	static Message spawn(float x, float y, int id, const char nick[12], short hp);
 	static Message spawnItem(int type, float x, float y);
 	static Message updateState(const entityData &data);
+	static Message chat(std::string text);
 	static Message make(Message::Type type);
 };
 
