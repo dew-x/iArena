@@ -118,7 +118,7 @@ Message Protocol::updateState(const entityData & data)
 
 Message Protocol::chat(std::string t){
 	Message m = make(Message::CHAT);
-	//strcpy(m.As.chat.text, t.c_str());
+	strcpy_s(m.As.chat.text, t.size(), t.c_str());
 	return m;
 }
 
