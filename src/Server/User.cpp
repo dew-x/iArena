@@ -30,7 +30,7 @@ Message User::message(const Message & m, map<int, Entity*> entities, Message &br
 		break;
 	case Message::UPDATE_KEYS:
 		if (valid) keys.push_back(m);
-		res = Protocol::nKeys(m.uid);
+		res = Protocol::nKeys(m.uid,position.x,position.y);
 		if (valid && m.As.uKeys.w) ndir.y -= 1.0f;
 		if (valid && m.As.uKeys.a) ndir.x -= 1.0f;
 		if (valid && m.As.uKeys.s) ndir.y += 1.0f;

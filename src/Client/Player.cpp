@@ -23,6 +23,7 @@ Player::Player(unsigned uid, float x, float y , float size, std::string nick, co
 	hpfront = sf::RectangleShape({ size - 4,size / 5.0f - 4 });
 	hpfront.setFillColor(sf::Color::Red);
 	hpfront.setOrigin({ hpfront.getLocalBounds().width / 2.0f,hpfront.getLocalBounds().height / 2.0f + size*2.0f/3.0f - size / 5.0f });
+	todo = { 0,0 };
 }
 
 
@@ -97,8 +98,9 @@ void Player::updatePos(float dt) {
 
 	if (direction.y > 0.0f) velocity.y = std::max(std::min(velocity.y, SPEED), 0.0f);
 	else velocity.y = std::max(std::min(velocity.y, 0.0f), -SPEED);*/
-
-	position += dot(direction,velocity*dt);
+	sf::Vector2f tomove = dot(direction, velocity*dt) + todo*0.1f;
+	todo -= todo*0.1f;
+	position += tomove;
 	
 	ps.setPosition(position);
 	nameText.setPosition(position);

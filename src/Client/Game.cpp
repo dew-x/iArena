@@ -286,6 +286,7 @@ void Game::updateGame(sf::Time dt) {
 						dir.x += 1.0f;
 					}
  					P->rectificateA((float)delta,dir);
+					P->setTarget(m.As.nKeys.x, m.As.nKeys.y);
 				}
 			}
 			break;

@@ -71,6 +71,7 @@ struct Message {
 		} uKeys;
 		struct {
 			unsigned rid;
+			float x, y;
 		} nKeys;
 		struct {
 			float x, y;
@@ -119,7 +120,7 @@ public:
 	static Message rLogin(const char nick[12]);
 	static Message Login(unsigned uid, float x, float y, const std::vector<entityData> &others, short hp, std::vector<Item> items);
 	static Message uKeys(bool w, bool a, bool s, bool d);
-	static Message nKeys(unsigned rid);
+	static Message nKeys(unsigned rid, float x, float y);
 	static Message fireWeapon(float x, float y, int id);
 	static Message fireResult(std::vector<hitData> collisions);
 	static Message fireBroadcast(unsigned uid, sf::Vector2f dir, std::vector<hitData> collisions);

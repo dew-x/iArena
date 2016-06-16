@@ -3,6 +3,7 @@
 
 Enemy::Enemy(int id, float x, float y, const char name[12],sf::Texture &tex,float size, const sf::Font &font, short hp)
 {
+	todo = { 0,0 };
 	this->id = id;
 	position = { x,y };
 	direction = { 0.0f,0.0f };
@@ -47,7 +48,9 @@ void Enemy::setEncodedDirection(char encoded)
 }
 
 void Enemy::update(float delta) {
-	position += normalize(direction)*SPEED*delta;
+	sf::Vector2f tomove = normalize(direction)*SPEED*delta+todo*0.1f;
+	todo -= todo*0.1f;
+	position += tomove;
 	s.setPosition(position);
 	nameText.setPosition(position);
 	hpbg.setPosition(position);
@@ -58,6 +61,8 @@ void Enemy::update(float delta) {
 void Enemy::updateState(const entityData &state)
 {
 	setEncodedDirection(state.direction);
+	todo.x = (state.x - position.x);
+	todo.y = (state.y - position.y);
 }
 
 sf::Vector2f Enemy::getPosition()

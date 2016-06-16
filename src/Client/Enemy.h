@@ -32,6 +32,7 @@ private:
 	sf::Vector2f direction;
 	sf::RectangleShape hpbg;
 	sf::RectangleShape hpfront;
+	sf::Vector2f todo;
 	short hp;
 	string name;
 	int id;

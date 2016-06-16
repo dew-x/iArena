@@ -46,10 +46,12 @@ Message Protocol::uKeys(bool w, bool a, bool s, bool d)
 	return m;
 }
 
-Message Protocol::nKeys(unsigned rid)
+Message Protocol::nKeys(unsigned rid, float x, float y)
 {
 	Message m = make(Message::NOTIFY_KEYS);
 	m.As.nKeys.rid = rid;
+	m.As.nKeys.x = x;
+	m.As.nKeys.y = y;
 	return m;
 }
 

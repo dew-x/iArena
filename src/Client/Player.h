@@ -49,12 +49,17 @@ public:
 		velocity = s.velocity;
 		V0 = s.V0;
 	}
+	void setTarget(float x, float y) {
+		todo.x = (x - position.x);
+		todo.y = (y - position.y);
+	}
 private:
 	sf::Vector2f direction;
 	sf::Vector2f position;
 	sf::Vector2f acceleration;
 	sf::Vector2f velocity;
 	sf::Vector2f V0;
+	sf::Vector2f todo;
 	//sprite of player
 	sf::Texture t;
 	sf::Sprite ps;
